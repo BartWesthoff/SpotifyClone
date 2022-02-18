@@ -6,6 +6,9 @@ import 'package:spotifyclone/app/core/ui/theme/bloc/theme_event.dart';
 import 'package:spotifyclone/app/core/ui/theme/themes/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:spotifyclone/app/routes/routes.dart';
+import 'package:spotifyclone/app/widgets/primary_action_button_widget.dart';
+import 'package:spotifyclone/app/widgets/secondary_action_button_widget.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -65,6 +68,13 @@ class HomePage extends StatelessWidget {
                   );
                 },
               ),
+            ),
+            PrimaryActionButton(text: "Sign up"),
+            SecondaryActionButton(text: "Log in"),
+            ElevatedButton(
+              onPressed: () =>
+                  Navigation.instance.pushNamed(route: Routes.intro),
+              child: Text("navigate"),
             ),
 
             // BlocBuilder<ThemeBloc, ThemeState>(
