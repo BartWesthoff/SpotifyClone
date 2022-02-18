@@ -7,9 +7,9 @@ abstract class ThemeEvent {
 }
 
 class ThemeChanged extends ThemeEvent {
-  final AppTheme theme;
+  final int themeNumber;
 
   ThemeChanged({
-    required this.theme,
+    required this.themeNumber,
   });
 }

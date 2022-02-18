@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 
+Color primarycolor = Color(0xff1db954);
 ThemeData lightTheme = ThemeData(
-  brightness: Brightness.light,
-  primaryColor: Color(0xff1db954),
+  useMaterial3: true,
+  primaryColor: primarycolor,
+  colorScheme: ColorScheme.fromSeed(
+    seedColor: primarycolor,
+    primary: primarycolor,
+    outline: Colors.grey,
+    brightness: Brightness.light,
+  ),
 );

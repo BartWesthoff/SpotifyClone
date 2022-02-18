@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spotifyclone/app/core/ui/theme/themes/owntheme.dart';
 
 class SecondaryActionButton extends StatelessWidget {
   final String text;
@@ -7,12 +6,12 @@ class SecondaryActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
+    return ElevatedButton(
         onPressed: () => {},
         child: Text(
           text,
           style: TextStyle(
-              color: Theme.of(context).invertedTextColor,
+              color: Theme.of(context).colorScheme.onBackground,
               fontSize: 20,
               fontWeight: FontWeight.bold),
         ),
@@ -21,8 +20,8 @@ class SecondaryActionButton extends StatelessWidget {
                 MaterialStateProperty.all(Colors.white.withOpacity(0.1)),
             padding: MaterialStateProperty.all(EdgeInsets.all(12.0)),
             minimumSize: MaterialStateProperty.all(Size(double.infinity, 0)),
-            foregroundColor: MaterialStateProperty.all(
-                Theme.of(context).scaffoldBackgroundColor),
+            backgroundColor: MaterialStateProperty.all(
+                Theme.of(context).colorScheme.background),
             shape: MaterialStateProperty.all(
               RoundedRectangleBorder(
                 side: BorderSide(color: Colors.grey),

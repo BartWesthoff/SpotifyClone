@@ -23,7 +23,6 @@ dependencies:
   meta: ^1.3.0
   very_good_analysis: ^2.3.0
 
-
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -62,7 +62,7 @@ class HomePage extends StatelessWidget {
                         // This will make the Bloc output a new ThemeState,
                         // which will rebuild the UI because of the BlocBuilder in main.dart
                         BlocProvider.of<ThemeBloc>(context)
-                            .add(ThemeChanged(theme: itemAppTheme));
+                            .add(ThemeChanged(themeNumber: index));
                       },
                     ),
                   );

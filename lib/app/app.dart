@@ -3,7 +3,6 @@ import 'package:spotifyclone/app/core/authentication/bloc/auth_bloc.dart';
 import 'package:spotifyclone/app/core/authentication/bloc/auth_state.dart';
 import 'package:spotifyclone/app/core/ui/theme/bloc/theme_bloc.dart';
 import 'package:spotifyclone/app/core/ui/theme/bloc/theme_state.dart';
-import 'package:spotifyclone/app/core/ui/theme/themes/owntheme.dart';
 import 'package:spotifyclone/app/routes/routes.dart';
 import 'package:flow_builder/flow_builder.dart';
 import 'package:flutter/material.dart';
@@ -47,7 +46,7 @@ class AppView extends StatelessWidget {
       FlutterNativeSplash.remove();
       return MaterialApp(
         navigatorKey: Navigation.instance.navigationKey,
-        theme: state.themeData,
+        theme: state.theme,
         debugShowCheckedModeBanner: false,
         home: FlowBuilder<AuthStatus>(
           state: context.select((AuthBloc bloc) => bloc.state.status),

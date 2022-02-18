@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spotifyclone/app/core/ui/theme/themes/owntheme.dart';
 import 'package:spotifyclone/app/widgets/primary_action_button_widget.dart';
 import 'package:spotifyclone/app/widgets/secondary_action_button_widget.dart';
 
