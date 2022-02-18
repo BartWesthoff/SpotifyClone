@@ -9,7 +9,7 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
     on<ThemeChanged>((event, emit) =>
         emit(ThemeState(themeData: appThemeData[event.theme]!)));
   }
-
+  // Keep this for migration BLoC version 7.3.0 -> 8.0.2
   // @override
   // Stream<ThemeState> mapEventToState(
   //   ThemeEvent event,

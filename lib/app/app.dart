@@ -7,6 +7,7 @@ import 'package:spotifyclone/app/routes/routes.dart';
 import 'package:flow_builder/flow_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 class App extends StatelessWidget {
   const App({
@@ -42,6 +43,7 @@ class AppView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ThemeBloc, ThemeState>(builder: (context, state) {
+      FlutterNativeSplash.remove();
       return MaterialApp(
         theme: state.themeData,
         debugShowCheckedModeBanner: false,
