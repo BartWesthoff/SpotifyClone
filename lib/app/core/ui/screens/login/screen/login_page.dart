@@ -1,9 +1,9 @@
 import 'package:authentication_repository/authentication_repository.dart';
-import 'package:spotifyclone/app/core/ui/screens/login/login.dart';
-import 'package:spotifyclone/app/core/ui/screens/login/screen/login_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:spotifyclone/app/core/ui/theme/theme_switch_widget.dart';
+import 'package:spotifyclone/app/core/ui/screens/login/login.dart';
+import 'package:spotifyclone/app/core/ui/screens/login/screen/login_form.dart';
+import 'package:spotifyclone/theme/theme_switch_widget.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);

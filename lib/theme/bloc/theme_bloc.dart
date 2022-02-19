@@ -1,7 +1,6 @@
-import 'package:bloc/bloc.dart';
-
-import 'theme_event.dart';
-import 'theme_state.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:spotifyclone/theme/bloc/theme_event.dart';
+import 'package:spotifyclone/theme/bloc/theme_state.dart';
 
 class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
   ThemeBloc() : super(ThemeState(themeNumber: 0)) {

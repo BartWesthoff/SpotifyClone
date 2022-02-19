@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:spotifyclone/app/core/ui/theme/bloc/theme_bloc.dart';
-import 'package:spotifyclone/app/core/ui/theme/bloc/theme_state.dart';
-
-import 'bloc/theme_event.dart';
+import 'package:spotifyclone/theme/bloc/theme_bloc.dart';
+import 'package:spotifyclone/theme/bloc/theme_event.dart';
+import 'package:spotifyclone/theme/bloc/theme_state.dart';
 
 class ThemeSwitch extends StatelessWidget {
   const ThemeSwitch({Key? key}) : super(key: key);
