@@ -38,3 +38,10 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
+
+  fonts:
+    - family: GothamMedium
+      fonts:
+        - asset: assets/fonts/GothamMedium.ttf
+        - asset: assets/fonts/GothamLight.tff
+          weight: 500

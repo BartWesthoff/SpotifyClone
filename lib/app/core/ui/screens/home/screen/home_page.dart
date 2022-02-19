@@ -69,8 +69,14 @@ class HomePage extends StatelessWidget {
                 },
               ),
             ),
-            PrimaryActionButton(text: "Sign up"),
-            SecondaryActionButton(text: "Log in"),
+            PrimaryActionButton(
+                text: "Sign up",
+                onTap: () =>
+                    Navigation.instance.pushNamed(route: Routes.signUp)),
+            SecondaryActionButton(
+                text: "Log in",
+                onTap: () =>
+                    Navigation.instance.pushNamed(route: Routes.login)),
             ElevatedButton(
               onPressed: () =>
                   Navigation.instance.pushNamed(route: Routes.intro),

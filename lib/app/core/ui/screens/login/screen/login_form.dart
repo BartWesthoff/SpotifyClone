@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:formz/formz.dart';
-import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:spotifyclone/app/routes/routes.dart';
+import 'package:spotifyclone/app/widgets/primary_action_button_widget.dart';
 
 class LoginForm extends StatelessWidget {
   const LoginForm({Key? key}) : super(key: key);
@@ -27,20 +28,36 @@ class LoginForm extends StatelessWidget {
       child: Align(
         alignment: const Alignment(0, -1 / 3),
         child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const SizedBox(height: 16),
-              _EmailInput(),
-              const SizedBox(height: 8),
-              _PasswordInput(),
-              const SizedBox(height: 8),
-              _LoginButton(),
-              const SizedBox(height: 8),
-              _GoogleLoginButton(),
-              const SizedBox(height: 4),
-              _SignUpButton(),
-            ],
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                SizedBox(
+                  child: Image.asset('assets/images/spotify_logo_black.png'),
+                  width: 200,
+                ),
+                const SizedBox(height: 64),
+                _EmailInput(),
+                const SizedBox(height: 8),
+                _PasswordInput(),
+                const SizedBox(height: 8),
+                _LoginButton(),
+                const SizedBox(height: 8),
+                //TODO make it better
+                _GoogleLoginButton(),
+                const SizedBox(height: 4),
+                _SignUpButton(),
+                const SizedBox(height: 4),
+                SizedBox(height: 60),
+                Text(
+                  "Forgot your password?",
+                  style: Theme.of(context)
+                      .textTheme
+                      .subtitle2
+                      ?.copyWith(fontSize: 16),
+                )
+              ],
+            ),
           ),
         ),
       ),
@@ -60,6 +77,8 @@ class _EmailInput extends StatelessWidget {
           keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
               hintText: "E-mailaddress or username",
+              hintStyle:
+                  TextStyle(color: Theme.of(context).colorScheme.onBackground),
               errorText: state.email.invalid ? 'invalid email' : null,
               floatingLabelBehavior: FloatingLabelBehavior.always,
               enabledBorder: OutlineInputBorder(
@@ -93,6 +112,8 @@ class _PasswordInput extends StatelessWidget {
           obscureText: true,
           decoration: InputDecoration(
               hintText: "Password",
+              hintStyle:
+                  TextStyle(color: Theme.of(context).colorScheme.onBackground),
               errorText: state.password.invalid ? 'invalid password' : null,
               floatingLabelBehavior: FloatingLabelBehavior.always,
               enabledBorder: OutlineInputBorder(
@@ -121,19 +142,25 @@ class _LoginButton extends StatelessWidget {
       builder: (context, state) {
         return state.status.isSubmissionInProgress
             ? const CircularProgressIndicator()
-            : ElevatedButton(
-                key: const Key('loginForm_continue_raisedButton'),
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  primary: const Color(0xFFFFD600),
-                ),
-                onPressed: state.status.isValidated
+            : PrimaryActionButton(
+                text: "Log In",
+                onTap: () => state.status.isValidated
                     ? () => context.read<LoginCubit>().logInWithCredentials()
                     : null,
-                child: const Text('LOGIN'),
               );
+        // ElevatedButton(
+        //         key: const Key('loginForm_continue_raisedButton'),
+        //         style: ElevatedButton.styleFrom(
+        //           shape: RoundedRectangleBorder(
+        //             borderRadius: BorderRadius.circular(30),
+        //           ),
+        //           primary: const Color(0xFFFFD600),
+        //         ),
+        //         onPressed: state.status.isValidated
+        //             ? () => context.read<LoginCubit>().logInWithCredentials()
+        //             : null,
+        //         child: const Text('LOGIN'),
+        //       );
       },
     );
   }

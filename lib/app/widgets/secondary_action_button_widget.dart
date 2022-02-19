@@ -2,30 +2,36 @@ import 'package:flutter/material.dart';
 
 class SecondaryActionButton extends StatelessWidget {
   final String text;
-  const SecondaryActionButton({Key? key, required this.text}) : super(key: key);
+  final void Function() onTap;
+  const SecondaryActionButton(
+      {Key? key, required this.text, required this.onTap})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-        onPressed: () => {},
+        onPressed: onTap,
         child: Text(
           text,
           style: TextStyle(
               color: Theme.of(context).colorScheme.onBackground,
-              fontSize: 20,
+              fontSize: 18,
+              fontFamily: 'GothamMedium',
               fontWeight: FontWeight.bold),
         ),
         style: ButtonStyle(
+            elevation: MaterialStateProperty.all(0),
             overlayColor:
                 MaterialStateProperty.all(Colors.white.withOpacity(0.1)),
-            padding: MaterialStateProperty.all(EdgeInsets.all(12.0)),
+            padding:
+                MaterialStateProperty.all(EdgeInsets.symmetric(vertical: 20.0)),
             minimumSize: MaterialStateProperty.all(Size(double.infinity, 0)),
             backgroundColor: MaterialStateProperty.all(
-                Theme.of(context).colorScheme.background),
+                Theme.of(context).scaffoldBackgroundColor),
             shape: MaterialStateProperty.all(
               RoundedRectangleBorder(
                 side: BorderSide(color: Colors.grey),
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(32),
               ),
             ),
             maximumSize: MaterialStateProperty.all(Size.infinite)));
