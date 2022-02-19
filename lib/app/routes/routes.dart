@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spotifyclone/app/core/authentication/bloc/authentication_bloc.dart';
-import 'package:spotifyclone/app/core/ui/screens/home/screen/home_page.dart';
+import 'package:spotifyclone/app/core/ui/screens/home/screen/home_screen.dart';
 import 'package:spotifyclone/app/core/ui/screens/intro/screen/intro_screen.dart';
 import 'package:spotifyclone/app/core/ui/screens/login/screen/login_page.dart';
+import 'package:spotifyclone/app/core/ui/screens/root/screen/root_screen.dart';
+import 'package:spotifyclone/app/core/ui/screens/search/screen/search_screen.dart';
 import 'package:spotifyclone/app/core/ui/screens/sign_up/screen/sign_up_page.dart';
 
 class Routes {
@@ -14,6 +16,9 @@ class Routes {
   static const String login = '/login';
   static const String signUp = '/signup';
   static const String home = '/home';
+  static const String library = '/library';
+  static const String search = '/search';
+  static const String root = '/root';
 }
 
 class Navigation {
@@ -41,11 +46,38 @@ class AppRouter {
     //final args = settings.arguments;
     if (BlocProvider.of<AuthenticationBloc>(context).state.status ==
         AuthenticationStatus.authenticated) {
-      return MaterialPageRoute<dynamic>(
-        builder: (context) => HomePage(),
-        settings: settings,
-        fullscreenDialog: true,
-      );
+      switch (settings.name) {
+        case Routes.root:
+          return MaterialPageRoute<dynamic>(
+            builder: (_) => RootScreen(),
+            settings: settings,
+            fullscreenDialog: true,
+          );
+        case Routes.home:
+          return MaterialPageRoute<dynamic>(
+            builder: (context) => HomeScreen(),
+            settings: settings,
+            fullscreenDialog: true,
+          );
+        case Routes.library:
+          return MaterialPageRoute<dynamic>(
+            builder: (context) => HomeScreen(),
+            settings: settings,
+            fullscreenDialog: true,
+          );
+        case Routes.search:
+          return MaterialPageRoute<dynamic>(
+            builder: (context) => SearchScreen(),
+            settings: settings,
+            fullscreenDialog: true,
+          );
+        default:
+          return MaterialPageRoute<dynamic>(
+            builder: (context) => RootScreen(),
+            settings: settings,
+            fullscreenDialog: true,
+          );
+      }
     }
     if (BlocProvider.of<AuthenticationBloc>(context).state.status ==
         AuthenticationStatus.unauthenticated) {

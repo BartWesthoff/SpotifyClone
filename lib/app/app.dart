@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:spotifyclone/app/core/authentication/bloc/authentication_bloc.dart';
+import 'package:spotifyclone/app/core/ui/screens/root/bloc/nav_bar_cubit.dart';
 import 'package:spotifyclone/app/routes/routes.dart';
 import 'package:spotifyclone/app/theme/theme.dart';
 
@@ -26,7 +27,10 @@ class App extends StatelessWidget {
               authenticationRepository: _authenticationRepository,
             ),
           ),
-          BlocProvider<ThemeBloc>(create: (BuildContext context) => ThemeBloc())
+          BlocProvider<ThemeBloc>(
+              create: (BuildContext context) => ThemeBloc()),
+          BlocProvider<NavBarCubit>(
+              create: (BuildContext context) => NavBarCubit()),
         ],
         child: const AppView(),
       ),
@@ -50,7 +54,7 @@ class AppView extends StatelessWidget {
             listener: (context, state) {
               switch (state.status) {
                 case AuthenticationStatus.authenticated:
-                  Navigation.instance.pushReplace(route: Routes.home);
+                  Navigation.instance.pushReplace(route: Routes.root);
                   break;
                 case AuthenticationStatus.unauthenticated:
                   Navigation.instance.pushReplace(route: Routes.intro);

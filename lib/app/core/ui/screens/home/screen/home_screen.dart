@@ -5,27 +5,21 @@ import 'package:spotifyclone/app/core/ui/screens/home/widgets/avatar.dart';
 import 'package:spotifyclone/app/theme/theme.dart';
 import 'package:spotifyclone/app/theme/themes/themes.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
-
-  static Page page() => const MaterialPage<void>(child: HomePage());
-
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({Key? key}) : super(key: key);
+  static Page page() => const MaterialPage<void>(child: HomeScreen());
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final user = context.select((AuthenticationBloc bloc) => bloc.state.user);
     return Scaffold(
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
         title: const Text('Home'),
         actions: <Widget>[
           IconButton(
-            key: const Key('homePage_logout_iconButton'),
+            key: const Key('HomeScreen_logout_iconButton'),
             icon: const Icon(Icons.exit_to_app),
             onPressed: () => context
                 .read<AuthenticationBloc>()
