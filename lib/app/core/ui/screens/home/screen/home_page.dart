@@ -1,24 +1,25 @@
-import 'package:spotifyclone/app/core/authentication/bloc/auth_bloc.dart';
-import 'package:spotifyclone/app/core/authentication/bloc/auth_event.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:spotifyclone/app/core/authentication/bloc/authentication_bloc.dart';
 import 'package:spotifyclone/app/core/ui/screens/home/widgets/avatar.dart';
 import 'package:spotifyclone/app/core/ui/theme/bloc/theme_bloc.dart';
 import 'package:spotifyclone/app/core/ui/theme/bloc/theme_event.dart';
 import 'package:spotifyclone/app/core/ui/theme/themes/themes.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:spotifyclone/app/routes/routes.dart';
-import 'package:spotifyclone/app/widgets/primary_action_button_widget.dart';
-import 'package:spotifyclone/app/widgets/secondary_action_button_widget.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
   static Page page() => const MaterialPage<void>(child: HomePage());
 
   @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final user = context.select((AuthBloc bloc) => bloc.state.user);
+    final user = context.select((AuthenticationBloc bloc) => bloc.state.user);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
@@ -27,7 +28,9 @@ class HomePage extends StatelessWidget {
           IconButton(
             key: const Key('homePage_logout_iconButton'),
             icon: const Icon(Icons.exit_to_app),
-            onPressed: () => context.read<AuthBloc>().add(AppLogoutRequested()),
+            onPressed: () => context
+                .read<AuthenticationBloc>()
+                .add(AuthenticationLogoutRequested()),
           )
         ],
       ),
@@ -69,29 +72,6 @@ class HomePage extends StatelessWidget {
                 },
               ),
             ),
-            PrimaryActionButton(
-                text: "Sign up",
-                onTap: () =>
-                    Navigation.instance.pushNamed(route: Routes.signUp)),
-            SecondaryActionButton(
-                text: "Log in",
-                onTap: () =>
-                    Navigation.instance.pushNamed(route: Routes.login)),
-            ElevatedButton(
-              onPressed: () =>
-                  Navigation.instance.pushNamed(route: Routes.intro),
-              child: Text("navigate"),
-            ),
-
-            // BlocBuilder<ThemeBloc, ThemeState>(
-            //   builder: (BuildContext context, state) {
-            //     return SwitchListTile(
-            //         value: false,
-            //         onChanged: (value) {
-            //
-            //         });
-            //   },
-            // ),
           ],
         ),
       ),

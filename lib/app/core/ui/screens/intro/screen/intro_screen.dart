@@ -5,7 +5,9 @@ import 'package:spotifyclone/app/widgets/secondary_action_button_widget.dart';
 
 class IntroScreen extends StatelessWidget {
   const IntroScreen({Key? key}) : super(key: key);
+
   static Page page() => const MaterialPage<void>(child: IntroScreen());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,12 +31,12 @@ class IntroScreen extends StatelessWidget {
             PrimaryActionButton(
                 text: "SIGN UP",
                 onTap: () =>
-                    Navigation.instance.pushNamed(route: Routes.signUp)),
+                    Navigation.instance.pushReplace(route: Routes.signUp)),
             SizedBox(height: 16),
             SecondaryActionButton(
                 text: "LOG IN",
                 onTap: () =>
-                    Navigation.instance.pushNamed(route: Routes.login)),
+                    Navigation.instance.pushReplace(route: Routes.login)),
             SizedBox(height: 120),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 48.0),

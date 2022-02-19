@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spotifyclone/app/core/ui/theme/themes/themes.dart';
 
-@immutable
 class ThemeState {
   final int themeNumber;
   late ThemeData theme;

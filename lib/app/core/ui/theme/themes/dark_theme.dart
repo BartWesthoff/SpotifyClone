@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spotifyclone/app/core/ui/theme/themes/light_theme.dart';
 
 Color primarycolor = Color(0xff1db954);
 ThemeData darkTheme = ThemeData(

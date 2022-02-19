@@ -1,12 +1,20 @@
 import 'dart:async';
 
 import 'package:authentication_repository/authentication_repository.dart';
-import 'package:cache/cache.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:firebase_auth_platform_interface/firebase_auth_platform_interface.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:meta/meta.dart';
+
+/// AuthenticationStatus kinds,
+enum AuthenticationStatus {
+  /// authenticated: user is authenticated (logged in)
+  authenticated,
+
+  /// [unauthenticated]: user is not authenticated (not logged in)
+  unauthenticated
+}
 
 /// {@template sign_up_with_email_and_password_failure}
 /// Thrown if during the sign up process if a failure occurs.
@@ -154,16 +162,14 @@ class LogOutFailure implements Exception {}
 class AuthenticationRepository {
   /// {@macro authentication_repository}
   AuthenticationRepository({
-    CacheClient? cache,
     firebase_auth.FirebaseAuth? firebaseAuth,
     GoogleSignIn? googleSignIn,
-  })  : _cache = cache ?? CacheClient(),
-        _firebaseAuth = firebaseAuth ?? firebase_auth.FirebaseAuth.instance,
+  })  : _firebaseAuth = firebaseAuth ?? firebase_auth.FirebaseAuth.instance,
         _googleSignIn = googleSignIn ?? GoogleSignIn.standard();
 
-  final CacheClient _cache;
   final firebase_auth.FirebaseAuth _firebaseAuth;
   final GoogleSignIn _googleSignIn;
+  final _controller = StreamController<AuthenticationStatus>();
 
   /// Whether or not the current environment is web
   /// Should only be overriden for testing purposes. Otherwise,
@@ -180,10 +186,23 @@ class AuthenticationRepository {
   /// the authentication state changes.
   ///
   /// Emits [User.empty] if the user is not authenticated.
+  ///
+  ///
+  ///
+  ///
+  ///
+  Stream<AuthenticationStatus> get status async* {
+    yield* _controller.stream;
+  }
+
+  /// disposes streamcontroller holder auth status
+  void dispose() => _controller.close();
+
+  /// getting the currently logged in user.
+  /// Will return empty user instead of null
   Stream<User> get user {
     return _firebaseAuth.authStateChanges().map((firebaseUser) {
       final user = firebaseUser == null ? User.empty : firebaseUser.toUser;
-      _cache.write(key: userCacheKey, value: user);
       return user;
     });
   }
@@ -191,7 +210,12 @@ class AuthenticationRepository {
   /// Returns the current cached user.
   /// Defaults to [User.empty] if there is no cached user.
   User get currentUser {
-    return _cache.read<User>(key: userCacheKey) ?? User.empty;
+    final user = _firebaseAuth.currentUser;
+    if (user == null) {
+      return User.empty;
+    } else {
+      return user.toUser;
+    }
   }
 
   /// Creates a new user with the provided [email] and [password].
@@ -232,6 +256,7 @@ class AuthenticationRepository {
       }
 
       await _firebaseAuth.signInWithCredential(credential);
+      _controller.add(AuthenticationStatus.authenticated);
     } on FirebaseAuthException catch (e) {
       throw LogInWithGoogleFailure.fromCode(e.code);
     } catch (_) {
@@ -268,6 +293,7 @@ class AuthenticationRepository {
         _firebaseAuth.signOut(),
         _googleSignIn.signOut(),
       ]);
+      _controller.add(AuthenticationStatus.unauthenticated);
     } catch (_) {
       throw LogOutFailure();
     }

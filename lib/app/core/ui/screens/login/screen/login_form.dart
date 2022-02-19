@@ -1,10 +1,11 @@
-import 'package:spotifyclone/app/core/ui/screens/login/cubit/login_state.dart';
-import 'package:spotifyclone/app/core/ui/screens/login/login.dart';
-import 'package:spotifyclone/app/core/ui/screens/sign_up/screen/sign_up_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:formz/formz.dart';
+import 'package:spotifyclone/app/core/authentication/bloc/authentication_bloc.dart';
+import 'package:spotifyclone/app/core/ui/screens/login/bloc/login_bloc.dart';
+import 'package:spotifyclone/app/core/ui/screens/login/bloc/login_event.dart';
+import 'package:spotifyclone/app/core/ui/screens/login/bloc/login_state.dart';
 import 'package:spotifyclone/app/routes/routes.dart';
 import 'package:spotifyclone/app/widgets/primary_action_button_widget.dart';
 
@@ -13,7 +14,7 @@ class LoginForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<LoginCubit, LoginState>(
+    return BlocListener<LoginBloc, LoginState>(
       listener: (context, state) {
         if (state.status.isSubmissionFailure) {
           ScaffoldMessenger.of(context)
@@ -50,7 +51,7 @@ class LoginForm extends StatelessWidget {
                 const SizedBox(height: 4),
                 SizedBox(height: 60),
                 Text(
-                  "Forgot your password?",
+                  context.read<AuthenticationBloc>().state.status.toString(),
                   style: Theme.of(context)
                       .textTheme
                       .subtitle2
@@ -68,12 +69,13 @@ class LoginForm extends StatelessWidget {
 class _EmailInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LoginCubit, LoginState>(
+    return BlocBuilder<LoginBloc, LoginState>(
       buildWhen: (previous, current) => previous.email != current.email,
       builder: (context, state) {
         return TextField(
           key: const Key('loginForm_emailInput_textField'),
-          onChanged: (email) => context.read<LoginCubit>().emailChanged(email),
+          onChanged: (email) =>
+              context.read<LoginBloc>().add(LoginEmailChanged(email)),
           keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
               hintText: "E-mailaddress or username",
@@ -102,13 +104,13 @@ class _EmailInput extends StatelessWidget {
 class _PasswordInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LoginCubit, LoginState>(
+    return BlocBuilder<LoginBloc, LoginState>(
       buildWhen: (previous, current) => previous.password != current.password,
       builder: (context, state) {
         return TextField(
           key: const Key('loginForm_passwordInput_textField'),
           onChanged: (password) =>
-              context.read<LoginCubit>().passwordChanged(password),
+              context.read<LoginBloc>().add(LoginPasswordChanged(password)),
           obscureText: true,
           decoration: InputDecoration(
               hintText: "Password",
@@ -137,7 +139,7 @@ class _PasswordInput extends StatelessWidget {
 class _LoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LoginCubit, LoginState>(
+    return BlocBuilder<LoginBloc, LoginState>(
       buildWhen: (previous, current) => previous.status != current.status,
       builder: (context, state) {
         return state.status.isSubmissionInProgress
@@ -145,7 +147,8 @@ class _LoginButton extends StatelessWidget {
             : PrimaryActionButton(
                 text: "Log In",
                 onTap: () => state.status.isValidated
-                    ? () => context.read<LoginCubit>().logInWithCredentials()
+                    ? () =>
+                        context.read<LoginBloc>().add(const LoginWithGoogle())
                     : null,
               );
         // ElevatedButton(
@@ -171,20 +174,20 @@ class _GoogleLoginButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return ElevatedButton.icon(
-      key: const Key('loginForm_googleLogin_raisedButton'),
-      label: const Text(
-        'SIGN IN WITH GOOGLE',
-        style: TextStyle(color: Colors.white),
-      ),
-      style: ElevatedButton.styleFrom(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30),
+        key: const Key('loginForm_googleLogin_raisedButton'),
+        label: const Text(
+          'SIGN IN WITH GOOGLE',
+          style: TextStyle(color: Colors.white),
         ),
-        primary: theme.colorScheme.secondary,
-      ),
-      icon: const Icon(FontAwesomeIcons.google, color: Colors.white),
-      onPressed: () => context.read<LoginCubit>().logInWithGoogle(),
-    );
+        style: ElevatedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+          primary: theme.colorScheme.secondary,
+        ),
+        icon: const Icon(FontAwesomeIcons.google, color: Colors.white),
+        onPressed: () =>
+            context.read<LoginBloc>().add(const LoginWithGoogle()));
   }
 }
 
@@ -194,7 +197,7 @@ class _SignUpButton extends StatelessWidget {
     final theme = Theme.of(context);
     return TextButton(
       key: const Key('loginForm_createAccount_flatButton'),
-      onPressed: () => Navigator.of(context).push<void>(SignUpPage.route()),
+      onPressed: () => Navigation.instance.pushReplace(route: Routes.signUp),
       child: Text(
         'CREATE ACCOUNT',
         style: TextStyle(color: theme.primaryColor),

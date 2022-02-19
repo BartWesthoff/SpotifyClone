@@ -43,5 +43,4 @@ flutter:
     - family: GothamMedium
       fonts:
         - asset: assets/fonts/GothamMedium.ttf
-        - asset: assets/fonts/GothamLight.tff
-          weight: 500
+

@@ -1,4 +1,3 @@
-import 'package:spotifyclone/app/core/ui/theme/themes/themes.dart';
 import 'package:meta/meta.dart';
 
 @immutable
