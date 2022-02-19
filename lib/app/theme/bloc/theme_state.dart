@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:spotifyclone/theme/themes/themes.dart';
+import 'package:spotifyclone/app/theme/themes/themes.dart';
 
 class ThemeState {
   final int themeNumber;

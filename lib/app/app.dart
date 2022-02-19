@@ -4,8 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:spotifyclone/app/core/authentication/bloc/authentication_bloc.dart';
 import 'package:spotifyclone/app/routes/routes.dart';
-import 'package:spotifyclone/theme/bloc/theme_bloc.dart';
-import 'package:spotifyclone/theme/bloc/theme_state.dart';
+import 'package:spotifyclone/app/theme/theme.dart';
 
 class App extends StatelessWidget {
   const App({

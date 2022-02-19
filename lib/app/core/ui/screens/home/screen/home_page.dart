@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spotifyclone/app/core/authentication/bloc/authentication_bloc.dart';
 import 'package:spotifyclone/app/core/ui/screens/home/widgets/avatar.dart';
-import 'package:spotifyclone/theme/theme.dart';
-import 'package:spotifyclone/theme/themes/themes.dart';
+import 'package:spotifyclone/app/theme/theme.dart';
+import 'package:spotifyclone/app/theme/themes/themes.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
