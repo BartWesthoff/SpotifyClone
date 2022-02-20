@@ -17,44 +17,56 @@ class _RootScreenState extends State<RootScreen> {
       extendBody: true,
       bottomNavigationBar: BlocBuilder<NavBarCubit, NavBarState>(
         builder: (context, state) {
-          return BottomNavigationBar(
-            backgroundColor: Colors.black.withOpacity(0.1),
-            elevation: 0,
-            currentIndex: state.index,
-            showUnselectedLabels: false,
-            items: [
-              BottomNavigationBarItem(
+          return Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Colors.transparent, Colors.black],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                stops: [0.0, 1],
+                tileMode: TileMode.clamp,
+              ),
+            ),
+            child: BottomNavigationBar(
+              type: BottomNavigationBarType.fixed,
+              backgroundColor: Colors.black.withOpacity(0.0),
+              elevation: 0,
+              currentIndex: state.index,
+              showUnselectedLabels: false,
+              items: [
+                BottomNavigationBarItem(
+                    icon: Icon(
+                      Icons.home,
+                    ),
+                    label: 'Home',
+                    backgroundColor: Colors.transparent),
+                BottomNavigationBarItem(
+                  backgroundColor: Colors.red,
                   icon: Icon(
-                    Icons.home,
+                    Icons.search,
                   ),
-                  label: 'Home',
-                  backgroundColor: Colors.transparent),
-              BottomNavigationBarItem(
-                backgroundColor: Colors.red,
-                icon: Icon(
-                  Icons.search,
+                  label: 'Settings',
                 ),
-                label: 'Settings',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.my_library_music_outlined,
+                BottomNavigationBarItem(
+                  icon: Icon(
+                    Icons.my_library_music_outlined,
+                  ),
+                  label: 'Profile',
                 ),
-                label: 'Profile',
-              ),
-            ],
-            onTap: (index) {
-              if (index == 0) {
-                BlocProvider.of<NavBarCubit>(context)
-                    .getNavBarItem(NavbarItem.home);
-              } else if (index == 1) {
-                BlocProvider.of<NavBarCubit>(context)
-                    .getNavBarItem(NavbarItem.search);
-              } else if (index == 2) {
-                BlocProvider.of<NavBarCubit>(context)
-                    .getNavBarItem(NavbarItem.library);
-              }
-            },
+              ],
+              onTap: (index) {
+                if (index == 0) {
+                  BlocProvider.of<NavBarCubit>(context)
+                      .getNavBarItem(NavbarItem.home);
+                } else if (index == 1) {
+                  BlocProvider.of<NavBarCubit>(context)
+                      .getNavBarItem(NavbarItem.search);
+                } else if (index == 2) {
+                  BlocProvider.of<NavBarCubit>(context)
+                      .getNavBarItem(NavbarItem.library);
+                }
+              },
+            ),
           );
         },
       ),

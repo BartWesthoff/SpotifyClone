@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spotifyclone/app/core/authentication/bloc/authentication_bloc.dart';
+import 'package:spotifyclone/app/core/data/models/playlist_model.dart';
+import 'package:spotifyclone/app/core/data/playlists.dart';
 import 'package:spotifyclone/app/core/ui/screens/home/widgets/avatar.dart';
 import 'package:spotifyclone/app/theme/theme.dart';
 import 'package:spotifyclone/app/theme/themes/themes.dart';
@@ -13,60 +15,232 @@ class HomeScreen extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     final user = context.select((AuthenticationBloc bloc) => bloc.state.user);
     return Scaffold(
-      backgroundColor: Colors.transparent,
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
-        title: const Text('Home'),
-        actions: <Widget>[
-          IconButton(
-            key: const Key('HomeScreen_logout_iconButton'),
-            icon: const Icon(Icons.exit_to_app),
-            onPressed: () => context
-                .read<AuthenticationBloc>()
-                .add(AuthenticationLogoutRequested()),
-          )
-        ],
-      ),
-      body: Align(
-        alignment: const Alignment(0, -1 / 3),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Avatar(photo: user.photo),
-            const SizedBox(height: 4),
-            Text(user.email ?? '', style: textTheme.headline6),
-            const SizedBox(height: 4),
-            Text(user.name ?? '', style: textTheme.headline5),
-            Expanded(
-              child: ListView.builder(
-                padding: EdgeInsets.all(8),
-                itemCount: AppTheme.values.length,
-                itemBuilder: (context, index) {
-                  // Enums expose their values as a list - perfect for ListView
-                  // Store the theme for the current ListView item
-                  final itemAppTheme = AppTheme.values[index];
-                  return Card(
-                    // Style the cards with the to-be-selected theme colors
-                    color: appThemeData[itemAppTheme]?.primaryColor,
-                    child: ListTile(
-                      title: Text(
-                        itemAppTheme.toString(),
-                        // To show light text with the dark variants...
-                        style: appThemeData[itemAppTheme]?.textTheme.bodyText1,
-                      ),
-                      onTap: () {
-                        // This will make the Bloc output a new ThemeState,
-                        // which will rebuild the UI because of the BlocBuilder in main.dart
-                        BlocProvider.of<ThemeBloc>(context)
-                            .add(ThemeChanged(themeNumber: index));
-                      },
-                    ),
-                  );
-                },
+      extendBody: true,
+      backgroundColor: Color(0xFF121212),
+      body: Container(
+        padding: EdgeInsets.only(top: MediaQuery.of(context).viewPadding.top),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment(0.0, -0.5),
+            colors: [
+              const Color.fromRGBO(235, 238, 227, 0.3),
+              const Color.fromRGBO(255, 255, 255, 0),
+            ],
+          ),
+        ),
+        child: Stack(
+          children: [
+            SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 10 * 2),
+                  Container(
+                    margin: EdgeInsets.only(right: 10 * 2),
+                    child: Align(
+                        alignment: Alignment.topRight,
+                        child: Icon(Icons.settings_outlined)),
+                  ),
+                  HomePreferredPlayListSection(),
+                  PlaylistSection(
+                    title: 'Recenty Played',
+                    playlists: recentlyPlayed,
+                  ),
+                  SizedBox(height: 20 * 5),
+                  PlaylistSection(
+                    title: 'Jump back in',
+                    playlists: jumpBackIn,
+                  ),
+                  SizedBox(height: 10 * 17),
+                ],
               ),
             ),
+            //   SpBottomNavigation(songIsPlaying: true),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class HomePreferredPlayListSection extends StatelessWidget {
+  const HomePreferredPlayListSection({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(height: 10 * 2),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10 * 2),
+          child: Text('Good evening',
+              style: Theme.of(context)
+                  .textTheme
+                  .headline6
+                  ?.copyWith(color: Theme.of(context).colorScheme.background)),
+        ),
+        SizedBox(height: 10 * 1.5),
+        Container(
+          margin: EdgeInsets.symmetric(horizontal: 10 * 1.5),
+          child: Row(
+            children: [
+              homeUserPlaylist(playlist: userLeftPlaylistData),
+              homeUserPlaylist(playlist: userRightPlaylistData),
+            ],
+          ),
+        ),
+        SizedBox(height: 10 * 4.5),
+      ],
+    );
+  }
+}
+
+Widget homeUserPlaylist({required List<Playlist> playlist}) {
+  return Expanded(
+    child: Column(
+      children: playlist.map((item) => UserPlaylistItem(data: item)).toList(),
+    ),
+  );
+}
+
+class UserPlaylistItem extends StatelessWidget {
+  final Playlist data;
+  const UserPlaylistItem({Key? key, required this.data}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        //push to new page
+      },
+      child: Container(
+        margin: EdgeInsets.all(10 * 0.5),
+        height: 10 * 6,
+        width: double.infinity,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(4),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Color(0xFF2A2A2A),
+            ),
+            child: Row(
+              children: [
+                Image.asset(
+                  data.image,
+                  height: 10 * 6,
+                  width: 10 * 6,
+                ),
+                SizedBox(width: 10),
+                Expanded(
+                  child: Text(
+                    data.title,
+                    style: Theme.of(context).textTheme.subtitle2?.copyWith(
+                        color: Theme.of(context).colorScheme.onPrimary),
+                    softWrap: true,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class ShuffleButton extends StatelessWidget {
+  final Function() onTap;
+  const ShuffleButton({Key? key, required this.onTap}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: 10 * 1.2,
+        width: 10 * 1.6,
+        decoration: BoxDecoration(
+          color: Colors.grey,
+          borderRadius: BorderRadius.circular(4),
+        ),
+        child: Padding(
+          padding: EdgeInsets.all(2),
+          child: Icon(Icons.shuffle),
+        ),
+      ),
+    );
+  }
+}
+
+class PlaylistSection extends StatelessWidget {
+  final String title;
+  final List<Playlist> playlists;
+  const PlaylistSection(
+      {Key? key, required this.title, required this.playlists})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10 * 2),
+          child: Text(title,
+              style: Theme.of(context)
+                  .textTheme
+                  .headline6
+                  ?.copyWith(color: Theme.of(context).colorScheme.background)),
+        ),
+        SizedBox(height: 10 * 2),
+        Container(
+          height: 10 * 18,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: playlists.length,
+            itemBuilder: (context, index) {
+              return Container(
+                margin: EdgeInsets.only(
+                  left: index == 0 ? 10 * 2 : 10,
+                  right: index == playlists.length - 1 ? 10 * 2 : 10,
+                ),
+                child: PlayListItem(data: playlists[index]),
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class PlayListItem extends StatelessWidget {
+  final Playlist data;
+  const PlayListItem({Key? key, required this.data}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        // push
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Image.asset(
+            data.image,
+            height: 10 * 15,
+            width: 10 * 15,
+          ),
+          SizedBox(height: 10),
+          Text(data.title,
+              style: Theme.of(context)
+                  .textTheme
+                  .subtitle2
+                  ?.copyWith(color: Theme.of(context).colorScheme.background)),
+        ],
       ),
     );
   }
