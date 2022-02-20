@@ -16,7 +16,17 @@ final userLeftPlaylistData = [
     image: 'assets/images/1.jpg',
     shuffle: true,
     likes: '2.5M',
-    songs: [defaultSong],
+    songs: [
+      defaultSong,
+      defaultSong,
+      defaultSong,
+      defaultSong,
+      defaultSong,
+      defaultSong,
+      defaultSong,
+      defaultSong,
+      defaultSong
+    ],
   ),
   Playlist(
     title: 'Causeway Trends',

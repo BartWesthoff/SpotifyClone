@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spotifyclone/app/core/ui/screens/home/screen/home_screen.dart';
 import 'package:spotifyclone/app/core/ui/screens/library/screen/library_screen.dart';
+import 'package:spotifyclone/app/core/ui/screens/playlist/screen/playlist_screen.dart';
 import 'package:spotifyclone/app/core/ui/screens/root/bloc/nav_bar_cubit.dart';
 import 'package:spotifyclone/app/core/ui/screens/search/screen/search_screen.dart';
 
@@ -28,21 +29,19 @@ class _RootScreenState extends State<RootScreen> {
               ),
             ),
             child: BottomNavigationBar(
-              type: BottomNavigationBarType.fixed,
-              backgroundColor: Colors.black.withOpacity(0.0),
-              elevation: 0,
+              unselectedItemColor: Colors.grey,
+              unselectedIconTheme: IconThemeData(color: Colors.grey),
+              backgroundColor: Colors.transparent,
+              fixedColor: Colors.white,
               currentIndex: state.index,
-              showUnselectedLabels: false,
               items: const [
                 BottomNavigationBarItem(
                   icon: Icon(
                     Icons.home,
                   ),
                   label: 'Home',
-                  backgroundColor: Colors.transparent,
                 ),
                 BottomNavigationBarItem(
-                  backgroundColor: Colors.red,
                   icon: Icon(
                     Icons.search,
                   ),
@@ -76,7 +75,7 @@ class _RootScreenState extends State<RootScreen> {
           if (state.navbarItem == NavbarItem.home) {
             return const HomeScreen();
           } else if (state.navbarItem == NavbarItem.search) {
-            return const SearchScreen();
+            return PlaylistScreen(image: AssetImage('assets/images/1.jpg'));
           } else if (state.navbarItem == NavbarItem.library) {
             return const LibraryScreen();
           }
