@@ -28,8 +28,10 @@ class Navigation {
 
   Future<dynamic> popToFirst({required String route, Object? arguments}) =>
       navigationKey.currentState!.pushNamedAndRemoveUntil(
-          route, (Route<dynamic> route) => route.isFirst,
-          arguments: arguments);
+        route,
+        (Route<dynamic> route) => route.isFirst,
+        arguments: arguments,
+      );
 
   Future<dynamic> pushReplace({required String route, Object? arguments}) =>
       navigationKey.currentState!.pushReplacementNamed(route);
@@ -40,66 +42,66 @@ class Navigation {
   void goback() => navigationKey.currentState!.pop();
 }
 
-class AppRouter {
-  static Route<dynamic>? onGenerateRoute(
-      RouteSettings settings, BuildContext context) {
-    //final args = settings.arguments;
-    if (BlocProvider.of<AuthenticationBloc>(context).state.status ==
-        AuthenticationStatus.authenticated) {
-      switch (settings.name) {
-        case Routes.root:
-          return MaterialPageRoute<dynamic>(
-            builder: (_) => RootScreen(),
-            settings: settings,
-            fullscreenDialog: true,
-          );
-        case Routes.home:
-          return MaterialPageRoute<dynamic>(
-            builder: (context) => HomeScreen(),
-            settings: settings,
-            fullscreenDialog: true,
-          );
-        case Routes.library:
-          return MaterialPageRoute<dynamic>(
-            builder: (context) => HomeScreen(),
-            settings: settings,
-            fullscreenDialog: true,
-          );
-        case Routes.search:
-          return MaterialPageRoute<dynamic>(
-            builder: (context) => SearchScreen(),
-            settings: settings,
-            fullscreenDialog: true,
-          );
-        default:
-          return MaterialPageRoute<dynamic>(
-            builder: (context) => RootScreen(),
-            settings: settings,
-            fullscreenDialog: true,
-          );
-      }
+Route<dynamic>? onGenerateRoute(
+  RouteSettings settings,
+  BuildContext context,
+) {
+  //final args = settings.arguments;
+  if (BlocProvider.of<AuthenticationBloc>(context).state.status ==
+      AuthenticationStatus.authenticated) {
+    switch (settings.name) {
+      case Routes.root:
+        return MaterialPageRoute<dynamic>(
+          builder: (_) => RootScreen(),
+          settings: settings,
+          fullscreenDialog: true,
+        );
+      case Routes.home:
+        return MaterialPageRoute<dynamic>(
+          builder: (context) => const HomeScreen(),
+          settings: settings,
+          fullscreenDialog: true,
+        );
+      case Routes.library:
+        return MaterialPageRoute<dynamic>(
+          builder: (context) => const HomeScreen(),
+          settings: settings,
+          fullscreenDialog: true,
+        );
+      case Routes.search:
+        return MaterialPageRoute<dynamic>(
+          builder: (context) => const SearchScreen(),
+          settings: settings,
+          fullscreenDialog: true,
+        );
+      default:
+        return MaterialPageRoute<dynamic>(
+          builder: (context) => RootScreen(),
+          settings: settings,
+          fullscreenDialog: true,
+        );
     }
-    if (BlocProvider.of<AuthenticationBloc>(context).state.status ==
-        AuthenticationStatus.unauthenticated) {
-      switch (settings.name) {
-        case Routes.login:
-          return MaterialPageRoute<dynamic>(
-            builder: (_) => LoginPage(),
-            settings: settings,
-            fullscreenDialog: true,
-          );
-        case Routes.signUp:
-          return MaterialPageRoute<dynamic>(
-            builder: (_) => SignUpPage(),
-            settings: settings,
-            fullscreenDialog: true,
-          );
-      }
-    }
-    return MaterialPageRoute<dynamic>(
-      builder: (_) => IntroScreen(),
-      settings: settings,
-      fullscreenDialog: true,
-    );
   }
+  if (BlocProvider.of<AuthenticationBloc>(context).state.status ==
+      AuthenticationStatus.unauthenticated) {
+    switch (settings.name) {
+      case Routes.login:
+        return MaterialPageRoute<dynamic>(
+          builder: (_) => const LoginPage(),
+          settings: settings,
+          fullscreenDialog: true,
+        );
+      case Routes.signUp:
+        return MaterialPageRoute<dynamic>(
+          builder: (_) => const SignUpPage(),
+          settings: settings,
+          fullscreenDialog: true,
+        );
+    }
+  }
+  return MaterialPageRoute<dynamic>(
+    builder: (_) => const IntroScreen(),
+    settings: settings,
+    fullscreenDialog: true,
+  );
 }

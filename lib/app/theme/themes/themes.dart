@@ -1,12 +1,12 @@
-import 'dark_theme.dart';
-import 'light_theme.dart';
+import 'package:spotifyclone/app/theme/themes/dark_theme.dart';
+import 'package:spotifyclone/app/theme/themes/light_theme.dart';
 
 enum AppTheme {
-  LightTheme,
-  DarkTheme,
+  lightTheme,
+  darkTheme,
 }
 
 final appThemeData = {
-  AppTheme.LightTheme: lightTheme,
-  AppTheme.DarkTheme: darkTheme,
+  AppTheme.lightTheme: lightTheme,
+  AppTheme.darkTheme: darkTheme,
 };

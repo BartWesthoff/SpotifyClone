@@ -10,7 +10,7 @@ class ThemeSwitch extends StatelessWidget {
     return BlocBuilder<ThemeBloc, ThemeState>(
       builder: (context, state) {
         return Switch(
-          value: state.themeNumber == 0 ? false : true,
+          value: state.themeNumber == 0,
           onChanged: (newValue) {
             BlocProvider.of<ThemeBloc>(context)
                 .add(ThemeChanged(themeNumber: newValue ? 1 : 0));

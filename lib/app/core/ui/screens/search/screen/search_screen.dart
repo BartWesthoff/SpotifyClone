@@ -9,7 +9,7 @@ class SearchScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(height: 600),
+            const SizedBox(height: 600),
             Image.asset("assets/images/album_cover_1.jpg")
           ],
         ),

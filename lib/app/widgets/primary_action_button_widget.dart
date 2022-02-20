@@ -10,12 +10,6 @@ class PrimaryActionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: onTap,
-      child: Text(text,
-          style: TextStyle(
-              fontFamily: 'GothamMedium',
-              color: Theme.of(context).colorScheme.onPrimary,
-              fontSize: 18,
-              fontWeight: FontWeight.bold)),
       style: ButtonStyle(
         backgroundColor:
             MaterialStateProperty.all(Theme.of(context).colorScheme.primary),
@@ -23,16 +17,26 @@ class PrimaryActionButton extends StatelessWidget {
         //     MaterialStateProperty.all(Theme.of(context).primaryColor),
         // overlayColor:
         //     MaterialStateProperty.all(Colors.white.withOpacity(0.1)),
-        padding:
-            MaterialStateProperty.all(EdgeInsets.symmetric(vertical: 20.0)),
+        padding: MaterialStateProperty.all(
+          const EdgeInsets.symmetric(vertical: 20.0),
+        ),
         splashFactory: InkRipple.splashFactory,
-        minimumSize: MaterialStateProperty.all(Size(double.infinity, 0)),
+        minimumSize: MaterialStateProperty.all(const Size(double.infinity, 0)),
         shape: MaterialStateProperty.all(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(24),
           ),
         ),
         maximumSize: MaterialStateProperty.all(Size.infinite),
+      ),
+      child: Text(
+        text,
+        style: TextStyle(
+          fontFamily: 'GothamMedium',
+          color: Theme.of(context).colorScheme.onPrimary,
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+        ),
       ),
     );
   }

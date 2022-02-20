@@ -7,10 +7,11 @@ class Playlist {
   final String likes;
   final List<Song> songs;
 
-  Playlist(
-      {required this.title,
-      required this.image,
-      required this.shuffle,
-      required this.likes,
-      required this.songs});
+  Playlist({
+    required this.title,
+    required this.image,
+    required this.shuffle,
+    required this.likes,
+    required this.songs,
+  });
 }

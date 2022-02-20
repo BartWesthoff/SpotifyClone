@@ -1,31 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:spotifyclone/app/core/authentication/bloc/authentication_bloc.dart';
 import 'package:spotifyclone/app/core/data/models/playlist_model.dart';
 import 'package:spotifyclone/app/core/data/playlists.dart';
-import 'package:spotifyclone/app/core/ui/screens/home/widgets/avatar.dart';
-import 'package:spotifyclone/app/theme/theme.dart';
-import 'package:spotifyclone/app/theme/themes/themes.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
+
   static Page page() => const MaterialPage<void>(child: HomeScreen());
+
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    final user = context.select((AuthenticationBloc bloc) => bloc.state.user);
+    // final user = context.select((AuthenticationBloc bloc) => bloc.state.user);
     return Scaffold(
       extendBody: true,
-      backgroundColor: Color(0xFF121212),
+      backgroundColor: const Color(0xFF121212),
       body: Container(
         padding: EdgeInsets.only(top: MediaQuery.of(context).viewPadding.top),
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
-            end: Alignment(0.0, -0.5),
+            end: const Alignment(-0.7, -0.7),
             colors: [
-              const Color.fromRGBO(235, 238, 227, 0.3),
-              const Color.fromRGBO(255, 255, 255, 0),
+              const Color(0xffEBEEE3).withOpacity(0.3),
+              Colors.black,
             ],
           ),
         ),
@@ -35,24 +31,17 @@ class HomeScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 10 * 2),
-                  Container(
-                    margin: EdgeInsets.only(right: 10 * 2),
-                    child: Align(
-                        alignment: Alignment.topRight,
-                        child: Icon(Icons.settings_outlined)),
-                  ),
-                  HomePreferredPlayListSection(),
+                  const HomePreferredPlayListSection(),
                   PlaylistSection(
                     title: 'Recenty Played',
                     playlists: recentlyPlayed,
                   ),
-                  SizedBox(height: 20 * 5),
+                  const SizedBox(height: 10 * 5),
                   PlaylistSection(
                     title: 'Jump back in',
                     playlists: jumpBackIn,
                   ),
-                  SizedBox(height: 10 * 17),
+                  const SizedBox(height: 10 * 17),
                 ],
               ),
             ),
@@ -72,18 +61,20 @@ class HomePreferredPlayListSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(height: 10 * 2),
+        const SizedBox(height: 10 * 2),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 10 * 2),
-          child: Text('Good evening',
-              style: Theme.of(context)
-                  .textTheme
-                  .headline6
-                  ?.copyWith(color: Theme.of(context).colorScheme.background)),
+          padding: const EdgeInsets.symmetric(horizontal: 10 * 2),
+          child: Text(
+            'Good evening',
+            style: Theme.of(context)
+                .textTheme
+                .headline6
+                ?.copyWith(color: Theme.of(context).colorScheme.background),
+          ),
         ),
-        SizedBox(height: 10 * 1.5),
+        const SizedBox(height: 10 * 1.5),
         Container(
-          margin: EdgeInsets.symmetric(horizontal: 10 * 1.5),
+          margin: const EdgeInsets.symmetric(horizontal: 10 * 1.5),
           child: Row(
             children: [
               homeUserPlaylist(playlist: userLeftPlaylistData),
@@ -91,7 +82,7 @@ class HomePreferredPlayListSection extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(height: 10 * 4.5),
+        const SizedBox(height: 10 * 4.5),
       ],
     );
   }
@@ -107,6 +98,7 @@ Widget homeUserPlaylist({required List<Playlist> playlist}) {
 
 class UserPlaylistItem extends StatelessWidget {
   final Playlist data;
+
   const UserPlaylistItem({Key? key, required this.data}) : super(key: key);
 
   @override
@@ -116,13 +108,13 @@ class UserPlaylistItem extends StatelessWidget {
         //push to new page
       },
       child: Container(
-        margin: EdgeInsets.all(10 * 0.5),
+        margin: const EdgeInsets.all(10 * 0.5),
         height: 10 * 6,
         width: double.infinity,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(4),
           child: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Color(0xFF2A2A2A),
             ),
             child: Row(
@@ -132,12 +124,13 @@ class UserPlaylistItem extends StatelessWidget {
                   height: 10 * 6,
                   width: 10 * 6,
                 ),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 Expanded(
                   child: Text(
                     data.title,
                     style: Theme.of(context).textTheme.subtitle2?.copyWith(
-                        color: Theme.of(context).colorScheme.onPrimary),
+                          color: Theme.of(context).colorScheme.onPrimary,
+                        ),
                     softWrap: true,
                   ),
                 ),
@@ -152,6 +145,7 @@ class UserPlaylistItem extends StatelessWidget {
 
 class ShuffleButton extends StatelessWidget {
   final Function() onTap;
+
   const ShuffleButton({Key? key, required this.onTap}) : super(key: key);
 
   @override
@@ -165,7 +159,7 @@ class ShuffleButton extends StatelessWidget {
           color: Colors.grey,
           borderRadius: BorderRadius.circular(4),
         ),
-        child: Padding(
+        child: const Padding(
           padding: EdgeInsets.all(2),
           child: Icon(Icons.shuffle),
         ),
@@ -177,9 +171,12 @@ class ShuffleButton extends StatelessWidget {
 class PlaylistSection extends StatelessWidget {
   final String title;
   final List<Playlist> playlists;
-  const PlaylistSection(
-      {Key? key, required this.title, required this.playlists})
-      : super(key: key);
+
+  const PlaylistSection({
+    Key? key,
+    required this.title,
+    required this.playlists,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -187,15 +184,17 @@ class PlaylistSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 10 * 2),
-          child: Text(title,
-              style: Theme.of(context)
-                  .textTheme
-                  .headline6
-                  ?.copyWith(color: Theme.of(context).colorScheme.background)),
+          padding: const EdgeInsets.symmetric(horizontal: 10 * 2),
+          child: Text(
+            title,
+            style: Theme.of(context)
+                .textTheme
+                .headline6
+                ?.copyWith(color: Theme.of(context).colorScheme.background),
+          ),
         ),
-        SizedBox(height: 10 * 2),
-        Container(
+        const SizedBox(height: 10 * 2),
+        SizedBox(
           height: 10 * 18,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
@@ -218,6 +217,7 @@ class PlaylistSection extends StatelessWidget {
 
 class PlayListItem extends StatelessWidget {
   final Playlist data;
+
   const PlayListItem({Key? key, required this.data}) : super(key: key);
 
   @override
@@ -234,12 +234,14 @@ class PlayListItem extends StatelessWidget {
             height: 10 * 15,
             width: 10 * 15,
           ),
-          SizedBox(height: 10),
-          Text(data.title,
-              style: Theme.of(context)
-                  .textTheme
-                  .subtitle2
-                  ?.copyWith(color: Theme.of(context).colorScheme.background)),
+          const SizedBox(height: 10),
+          Text(
+            data.title,
+            style: Theme.of(context)
+                .textTheme
+                .subtitle2
+                ?.copyWith(color: Theme.of(context).colorScheme.background),
+          ),
         ],
       ),
     );

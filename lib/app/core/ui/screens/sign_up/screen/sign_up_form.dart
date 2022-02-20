@@ -1,8 +1,8 @@
-import 'package:spotifyclone/app/core/ui/screens/sign_up/cubit/sign_up_cubit.dart';
-import 'package:spotifyclone/app/core/ui/screens/sign_up/cubit/sign_up_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
+import 'package:spotifyclone/app/core/ui/screens/sign_up/cubit/sign_up_cubit.dart';
+import 'package:spotifyclone/app/core/ui/screens/sign_up/cubit/sign_up_state.dart';
 
 class SignUpForm extends StatelessWidget {
   const SignUpForm({Key? key}) : super(key: key);

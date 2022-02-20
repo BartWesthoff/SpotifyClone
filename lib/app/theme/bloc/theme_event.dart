@@ -8,7 +8,7 @@ abstract class ThemeEvent {
 class ThemeChanged extends ThemeEvent {
   final int themeNumber;
 
-  ThemeChanged({
+  const ThemeChanged({
     required this.themeNumber,
   });
 }

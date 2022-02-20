@@ -8,7 +8,7 @@ class LibraryScreen extends StatelessWidget {
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
-          children: [
+          children: const [
             Text("hello"),
           ],
         ),

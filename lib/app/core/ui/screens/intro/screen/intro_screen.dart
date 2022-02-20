@@ -15,29 +15,34 @@ class IntroScreen extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            SizedBox(height: 100),
+            const SizedBox(height: 100),
             Center(
-                child: Image.asset('assets/images/spotify_logo_black.png',
-                    width: 200)),
-            SizedBox(height: 88),
-            Text(
+              child: Image.asset(
+                'assets/images/spotify_logo_black.png',
+                width: 200,
+              ),
+            ),
+            const SizedBox(height: 88),
+            const Text(
               "We play the music. You enjoy it. Deal?",
               style: TextStyle(
-                  fontSize: 36,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'GothamMedium'),
+                fontSize: 36,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'GothamMedium',
+              ),
             ),
-            SizedBox(height: 88),
+            const SizedBox(height: 88),
             PrimaryActionButton(
-                text: "SIGN UP",
-                onTap: () =>
-                    Navigation.instance.pushReplace(route: Routes.signUp)),
-            SizedBox(height: 16),
+              text: "SIGN UP",
+              onTap: () =>
+                  Navigation.instance.pushReplace(route: Routes.signUp),
+            ),
+            const SizedBox(height: 16),
             SecondaryActionButton(
-                text: "LOG IN",
-                onTap: () =>
-                    Navigation.instance.pushReplace(route: Routes.login)),
-            SizedBox(height: 120),
+              text: "LOG IN",
+              onTap: () => Navigation.instance.pushReplace(route: Routes.login),
+            ),
+            const SizedBox(height: 120),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 48.0),
               child: Text(

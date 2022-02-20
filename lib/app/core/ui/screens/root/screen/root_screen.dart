@@ -18,13 +18,13 @@ class _RootScreenState extends State<RootScreen> {
       bottomNavigationBar: BlocBuilder<NavBarCubit, NavBarState>(
         builder: (context, state) {
           return Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
                 colors: [Colors.transparent, Colors.black],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 stops: [0.0, 1],
-                tileMode: TileMode.clamp,
+                // tileMode: TileMode.clamp,
               ),
             ),
             child: BottomNavigationBar(
@@ -33,13 +33,14 @@ class _RootScreenState extends State<RootScreen> {
               elevation: 0,
               currentIndex: state.index,
               showUnselectedLabels: false,
-              items: [
+              items: const [
                 BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.home,
-                    ),
-                    label: 'Home',
-                    backgroundColor: Colors.transparent),
+                  icon: Icon(
+                    Icons.home,
+                  ),
+                  label: 'Home',
+                  backgroundColor: Colors.transparent,
+                ),
                 BottomNavigationBarItem(
                   backgroundColor: Colors.red,
                   icon: Icon(
@@ -70,16 +71,18 @@ class _RootScreenState extends State<RootScreen> {
           );
         },
       ),
-      body: BlocBuilder<NavBarCubit, NavBarState>(builder: (context, state) {
-        if (state.navbarItem == NavbarItem.home) {
-          return HomeScreen();
-        } else if (state.navbarItem == NavbarItem.search) {
-          return SearchScreen();
-        } else if (state.navbarItem == NavbarItem.library) {
-          return LibraryScreen();
-        }
-        return Container();
-      }),
+      body: BlocBuilder<NavBarCubit, NavBarState>(
+        builder: (context, state) {
+          if (state.navbarItem == NavbarItem.home) {
+            return const HomeScreen();
+          } else if (state.navbarItem == NavbarItem.search) {
+            return const SearchScreen();
+          } else if (state.navbarItem == NavbarItem.library) {
+            return const LibraryScreen();
+          }
+          return Container();
+        },
+      ),
     );
   }
 }

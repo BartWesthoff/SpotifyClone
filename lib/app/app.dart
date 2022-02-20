@@ -28,9 +28,11 @@ class App extends StatelessWidget {
             ),
           ),
           BlocProvider<ThemeBloc>(
-              create: (BuildContext context) => ThemeBloc()),
+            create: (BuildContext context) => ThemeBloc(),
+          ),
           BlocProvider<NavBarCubit>(
-              create: (BuildContext context) => NavBarCubit()),
+            create: (BuildContext context) => NavBarCubit(),
+          ),
         ],
         child: const AppView(),
       ),
@@ -43,33 +45,34 @@ class AppView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ThemeBloc, ThemeState>(builder: (context, state) {
-      FlutterNativeSplash.remove();
-      return MaterialApp(
-        navigatorKey: Navigation.instance.navigationKey,
-        theme: state.theme,
-        debugShowCheckedModeBanner: false,
-        builder: (context, child) {
-          return BlocListener<AuthenticationBloc, AuthenticationState>(
-            listener: (context, state) {
-              switch (state.status) {
-                case AuthenticationStatus.authenticated:
-                  Navigation.instance.pushReplace(route: Routes.root);
-                  break;
-                case AuthenticationStatus.unauthenticated:
-                  Navigation.instance.pushReplace(route: Routes.intro);
-                  break;
-                default:
-                  break;
-              }
-            },
-            child: child,
-          );
-        },
-        onGenerateRoute: (settings) =>
-            AppRouter.onGenerateRoute(settings, context),
-      );
-    });
+    return BlocBuilder<ThemeBloc, ThemeState>(
+      builder: (context, state) {
+        FlutterNativeSplash.remove();
+        return MaterialApp(
+          navigatorKey: Navigation.instance.navigationKey,
+          theme: state.theme,
+          debugShowCheckedModeBanner: false,
+          builder: (context, child) {
+            return BlocListener<AuthenticationBloc, AuthenticationState>(
+              listener: (context, state) {
+                switch (state.status) {
+                  case AuthenticationStatus.authenticated:
+                    Navigation.instance.pushReplace(route: Routes.root);
+                    break;
+                  case AuthenticationStatus.unauthenticated:
+                    Navigation.instance.pushReplace(route: Routes.intro);
+                    break;
+                  default:
+                    break;
+                }
+              },
+              child: child,
+            );
+          },
+          onGenerateRoute: (settings) => onGenerateRoute(settings, context),
+        );
+      },
+    );
   }
 }
 //TODO fix bug not correctly getting info on first login

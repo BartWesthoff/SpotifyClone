@@ -11,10 +11,13 @@ class AuthenticationBloc
   AuthenticationBloc({
     required AuthenticationRepository authenticationRepository,
   })  : _authenticationRepository = authenticationRepository,
-        super(authenticationRepository.currentUser.isNotEmpty
-            ? AuthenticationState.authenticated(
-                authenticationRepository.currentUser)
-            : AuthenticationState.unauthenticated()) {
+        super(
+          authenticationRepository.currentUser.isNotEmpty
+              ? AuthenticationState.authenticated(
+                  authenticationRepository.currentUser,
+                )
+              : AuthenticationState.unauthenticated(),
+        ) {
     on<AuthenticationStatusChanged>(_onAuthenticationStatusChanged);
     on<AuthenticationLogoutRequested>(_onAuthenticationLogoutRequested);
     _authenticationStatusSubscription = _authenticationRepository.status.listen(
@@ -36,12 +39,12 @@ class AuthenticationBloc
   void _onAuthenticationStatusChanged(
     AuthenticationStatusChanged event,
     Emitter<AuthenticationState> emit,
-  ) async {
+  ) {
     switch (event.status) {
       case AuthenticationStatus.unauthenticated:
         return emit(AuthenticationState.unauthenticated());
       case AuthenticationStatus.authenticated:
-        final user = await _authenticationRepository.currentUser;
+        final user = _authenticationRepository.currentUser;
         return emit(AuthenticationState.authenticated(user));
       default:
       // final user = await _authenticationRepository.currentUser;

@@ -1,4 +1,4 @@
-import 'artist_model.dart';
+import 'package:spotifyclone/app/core/data/models/artist_model.dart';
 
 class Song {
   final String title;
@@ -6,9 +6,10 @@ class Song {
   final List<Artist> artists;
   final bool active;
 
-  Song(
-      {required this.title,
-      required this.image,
-      required this.artists,
-      this.active = false});
+  Song({
+    required this.title,
+    required this.image,
+    required this.artists,
+    this.active = false,
+  });
 }

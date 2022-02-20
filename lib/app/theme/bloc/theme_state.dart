@@ -6,10 +6,10 @@ class ThemeState {
   late ThemeData theme;
   ThemeState({required this.themeNumber}) {
     if (themeNumber == 0) {
-      theme = appThemeData[AppTheme.LightTheme]!;
+      theme = appThemeData[AppTheme.lightTheme]!;
     }
     if (themeNumber == 1) {
-      theme = appThemeData[AppTheme.DarkTheme]!;
+      theme = appThemeData[AppTheme.darkTheme]!;
     }
   }
 

@@ -34,8 +34,8 @@ class LoginForm extends StatelessWidget {
             child: Column(
               children: [
                 SizedBox(
-                  child: Image.asset('assets/images/spotify_logo_black.png'),
                   width: 200,
+                  child: Image.asset('assets/images/spotify_logo_black.png'),
                 ),
                 const SizedBox(height: 64),
                 _EmailInput(),
@@ -49,7 +49,7 @@ class LoginForm extends StatelessWidget {
                 const SizedBox(height: 4),
                 _SignUpButton(),
                 const SizedBox(height: 4),
-                SizedBox(height: 60),
+                const SizedBox(height: 60),
                 Text(
                   context.read<AuthenticationBloc>().state.status.toString(),
                   style: Theme.of(context)
@@ -78,23 +78,24 @@ class _EmailInput extends StatelessWidget {
               context.read<LoginBloc>().add(LoginEmailChanged(email)),
           keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
-              hintText: "E-mailaddress or username",
-              hintStyle:
-                  TextStyle(color: Theme.of(context).colorScheme.onBackground),
-              errorText: state.email.invalid ? 'invalid email' : null,
-              floatingLabelBehavior: FloatingLabelBehavior.always,
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(16),
-                borderSide: BorderSide(
-                  color: Theme.of(context).colorScheme.outline,
-                ),
+            hintText: "E-mailaddress or username",
+            hintStyle:
+                TextStyle(color: Theme.of(context).colorScheme.onBackground),
+            errorText: state.email.invalid ? 'invalid email' : null,
+            floatingLabelBehavior: FloatingLabelBehavior.always,
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16),
+              borderSide: BorderSide(
+                color: Theme.of(context).colorScheme.outline,
               ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(16),
-                borderSide: BorderSide(
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-              )),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16),
+              borderSide: BorderSide(
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
+          ),
         );
       },
     );
@@ -113,23 +114,24 @@ class _PasswordInput extends StatelessWidget {
               context.read<LoginBloc>().add(LoginPasswordChanged(password)),
           obscureText: true,
           decoration: InputDecoration(
-              hintText: "Password",
-              hintStyle:
-                  TextStyle(color: Theme.of(context).colorScheme.onBackground),
-              errorText: state.password.invalid ? 'invalid password' : null,
-              floatingLabelBehavior: FloatingLabelBehavior.always,
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(16),
-                borderSide: BorderSide(
-                  color: Theme.of(context).colorScheme.outline,
-                ),
+            hintText: "Password",
+            hintStyle:
+                TextStyle(color: Theme.of(context).colorScheme.onBackground),
+            errorText: state.password.invalid ? 'invalid password' : null,
+            floatingLabelBehavior: FloatingLabelBehavior.always,
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16),
+              borderSide: BorderSide(
+                color: Theme.of(context).colorScheme.outline,
               ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(16),
-                borderSide: BorderSide(
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-              )),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16),
+              borderSide: BorderSide(
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
+          ),
         );
       },
     );
@@ -174,20 +176,20 @@ class _GoogleLoginButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return ElevatedButton.icon(
-        key: const Key('loginForm_googleLogin_raisedButton'),
-        label: const Text(
-          'SIGN IN WITH GOOGLE',
-          style: TextStyle(color: Colors.white),
+      key: const Key('loginForm_googleLogin_raisedButton'),
+      label: const Text(
+        'SIGN IN WITH GOOGLE',
+        style: TextStyle(color: Colors.white),
+      ),
+      style: ElevatedButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30),
         ),
-        style: ElevatedButton.styleFrom(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30),
-          ),
-          primary: theme.colorScheme.secondary,
-        ),
-        icon: const Icon(FontAwesomeIcons.google, color: Colors.white),
-        onPressed: () =>
-            context.read<LoginBloc>().add(const LoginWithGoogle()));
+        primary: theme.colorScheme.secondary,
+      ),
+      icon: const Icon(FontAwesomeIcons.google, color: Colors.white),
+      onPressed: () => context.read<LoginBloc>().add(const LoginWithGoogle()),
+    );
   }
 }
 
