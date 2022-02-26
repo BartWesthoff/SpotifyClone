@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:spotifyclone/app/core/data/playlists.dart';
+import 'package:spotifyclone/app/core/ui/screens/artist/screen/artist_screen.dart';
 import 'package:spotifyclone/app/core/ui/screens/home/screen/home_screen.dart';
-import 'package:spotifyclone/app/core/ui/screens/library/screen/library_screen.dart';
-import 'package:spotifyclone/app/core/ui/screens/playlist/screen/playlist_screen.dart';
 import 'package:spotifyclone/app/core/ui/screens/root/bloc/nav_bar_cubit.dart';
+
+import '../../playlist/screen/playlist_screen.dart';
 
 class RootScreen extends StatefulWidget {
   @override
@@ -75,12 +75,9 @@ class _RootScreenState extends State<RootScreen> {
           if (state.navbarItem == NavbarItem.home) {
             return const HomeScreen();
           } else if (state.navbarItem == NavbarItem.search) {
-            return PlaylistScreen(
-              image: AssetImage('assets/images/1.jpg'),
-              playlist: userLeftPlaylistData[0],
-            );
+            return ArtistScreen();
           } else if (state.navbarItem == NavbarItem.library) {
-            return const LibraryScreen();
+            return ArtistPlaylistScreen();
           }
           return Container();
         },

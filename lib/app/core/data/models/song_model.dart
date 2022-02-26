@@ -6,7 +6,7 @@ class Song {
   final List<Artist> artists;
   final bool active;
   final bool lyrics;
-  final bool Explicit;
+  final bool explicit;
 
   Song({
     required this.title,
@@ -14,6 +14,15 @@ class Song {
     required this.artists,
     this.active = false,
     this.lyrics = false,
-    this.Explicit = false,
+    this.explicit = false,
   });
+
+  String get artistNames {
+    // TODO: implement toString
+    String val = "";
+    artists.forEach((element) {
+      val = val + element.name + ", ";
+    });
+    return val.substring(0, val.length - 2);
+  }
 }
