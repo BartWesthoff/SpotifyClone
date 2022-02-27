@@ -23,8 +23,11 @@ Future<void> main() async {
 
   await authenticationRepository.user.first;
   BlocOverrides.runZoned(
-    () => runApp(ProviderScope(
-        child: App(authenticationRepository: authenticationRepository))),
+    () => runApp(
+      ProviderScope(
+        child: App(authenticationRepository: authenticationRepository),
+      ),
+    ),
     blocObserver: AuthBlocObserver(),
   );
 }

@@ -19,10 +19,10 @@ class Song {
 
   String get artistNames {
     // TODO: implement toString
-    String val = "";
-    artists.forEach((element) {
-      val = val + element.name + ", ";
-    });
-    return val.substring(0, val.length - 2);
+    final buffer = StringBuffer();
+    for (final element in artists) {
+      buffer.write("${element.name}, ");
+    }
+    return buffer.toString();
   }
 }

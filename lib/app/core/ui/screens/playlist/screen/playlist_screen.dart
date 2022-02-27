@@ -2,288 +2,9 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:spotifyclone/app/core/data/models/song_model.dart';
 import 'package:spotifyclone/app/core/data/playlists.dart';
-import 'package:spotifyclone/app/core/ui/screens/artist/screen/artist_screen.dart';
-
-class AlbumCard extends StatelessWidget {
-  final ImageProvider image;
-  final String label;
-  final double size;
-
-  const AlbumCard({
-    Key? key,
-    required this.image,
-    required this.label,
-    this.size = 120,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(
-        //     builder: (context) => PlaylistScreen1(
-        //       playlist: userLeftPlaylistData[0],
-        //       image: image,
-        //     ),
-        //   ),
-        // );
-      },
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Image(
-            image: image,
-            width: size,
-            height: size,
-            fit: BoxFit.cover,
-          ),
-          SizedBox(height: 10),
-          Text(label),
-        ],
-      ),
-    );
-  }
-}
-
-class SongRow extends StatelessWidget {
-  final int number;
-  final bool numbered;
-  final Song song;
-  const SongRow(
-      {Key? key,
-      required this.number,
-      required this.numbered,
-      required this.song})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 50,
-      color: Colors.black,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
-        child: Row(
-          children: [
-            if (numbered)
-              Row(
-                children: [
-                  Text(number.toString(),
-                      style: TextStyle(color: Colors.white, fontSize: 16)),
-                  SizedBox(width: 24.0),
-                ],
-              ),
-            Image.asset('assets/images/album_cover_1.jpg'),
-            SizedBox(width: 12.0),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(song.title,
-                    style: TextStyle(
-                        color: song.active
-                            ? Theme.of(context).colorScheme.primary
-                            : Theme.of(context).colorScheme.onPrimary,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500)),
-                Row(
-                  children: [
-                    if (song.lyrics)
-                      Padding(
-                        padding: const EdgeInsets.only(right: 4.0),
-                        child: Container(
-                          padding: EdgeInsets.all(2.0),
-                          decoration: BoxDecoration(
-                            color: Colors.grey,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(4.0)),
-                          ),
-                          height: 15,
-                          child: Center(
-                              child: Text(
-                            "LYRICS",
-                            style: TextStyle(
-                                fontSize: 10,
-                                fontFamily: 'GothamMedium',
-                                fontWeight: FontWeight.w700),
-                          )),
-                        ),
-                      ),
-                    if (song.explicit)
-                      Padding(
-                        padding: const EdgeInsets.only(right: 4.0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.grey,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(4.0)),
-                          ),
-                          width: 15,
-                          height: 15,
-                          child: Center(
-                              child: Text(
-                            "E",
-                            style: TextStyle(
-                                fontSize: 10,
-                                fontFamily: 'GothamMedium',
-                                fontWeight: FontWeight.w400),
-                          )),
-                        ),
-                      ),
-                    Text(song.artistNames,
-                        style: TextStyle(color: Colors.grey)),
-                  ],
-                )
-              ],
-            ),
-            Spacer(),
-            Icon(Icons.more_vert_sharp, color: Colors.grey),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class AlbumRow extends StatelessWidget {
-  final double cardSize;
-
-  const AlbumRow({Key? key, required this.cardSize}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          AlbumCard(
-            size: cardSize,
-            label: "Get Turnt",
-            image: AssetImage("assets/images/6.jpg"),
-          ),
-          AlbumCard(
-            size: cardSize,
-            label: "Get Turnt",
-            image: AssetImage("assets/images/9.jpg"),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class ExtraSection extends StatelessWidget {
-  final double cardSize;
-
-  const ExtraSection({Key? key, required this.cardSize}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "You might also like",
-            style: Theme.of(context)
-                .textTheme
-                .headline6
-                ?.copyWith(color: Theme.of(context).colorScheme.onPrimary),
-          ),
-          AlbumRow(cardSize: cardSize),
-          AlbumRow(cardSize: cardSize),
-          AlbumRow(cardSize: cardSize),
-          AlbumRow(cardSize: cardSize),
-          AlbumRow(cardSize: cardSize),
-          AlbumRow(cardSize: cardSize),
-          AlbumRow(cardSize: cardSize),
-        ],
-      ),
-    );
-  }
-}
-
-class PlayButton extends StatelessWidget {
-  final double containerHeight;
-
-  const PlayButton({Key? key, required this.containerHeight}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Positioned(
-      right: 0,
-      bottom: 90 - containerHeight.clamp(120.0, double.infinity),
-      child: Stack(
-        alignment: Alignment.bottomRight,
-        children: [
-          Container(
-            width: 32,
-            height: 32,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: Color(0xff14D860),
-            ),
-            child: Icon(
-              Icons.play_arrow,
-              size: 19,
-            ),
-          ),
-          Container(
-            width: 12,
-            height: 12,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.white,
-            ),
-            child: Icon(
-              Icons.shuffle,
-              color: Colors.black,
-              size: 7,
-            ),
-          )
-        ],
-      ),
-    );
-  }
-}
-
-class DetailsAppBar extends StatelessWidget {
-  const DetailsAppBar({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 56,
-      // padding: EdgeInsets.only(left: 8.0),
-      width: MediaQuery.of(context).size.width,
-      color: Colors.red.darken(0.25),
-      child: Row(
-        children: [
-          Icon(
-            Icons.arrow_back,
-            color: Colors.white,
-            size: 26,
-          ),
-          SizedBox(
-            width: 16.0,
-          ),
-          Text("Kevin",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500)),
-        ],
-      ),
-    );
-  }
-}
+import 'package:spotifyclone/app/core/ui/screens/playlist/widgets/song_row_widget.dart';
+import 'package:spotifyclone/app/widgets/column_builder.dart';
 
 final counterProvider2 = StateProvider((ref) => 0.0);
 
@@ -324,16 +45,14 @@ class _SpotifyAlbumViewState extends ConsumerState<ArtistPlaylistScreen> {
         child: DecoratedBox(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  kPrimaryColor,
-                  Colors.black,
-                ],
-                stops: [
-                  0,
-                  0.7
-                ]),
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                kPrimaryColor,
+                Colors.black,
+              ],
+              stops: [0, 0.7],
+            ),
           ),
           child: Stack(
             children: [
@@ -348,26 +67,32 @@ class _SpotifyAlbumViewState extends ConsumerState<ArtistPlaylistScreen> {
                   AlbumInfo(infoBoxHeight: infoBoxHeight),
                   // const AlbumSongsList(),
                   SliverToBoxAdapter(
-                      child: ColumnBuilder(
-                          itemBuilder: (context, index) => SongRow(
-                              number: index + 1,
-                              numbered: false,
-                              song: defaultSong),
-                          itemCount: 10))
+                    child: ColumnBuilder(
+                      itemBuilder: (context, index) => SongRow(
+                        number: index + 1,
+                        numbered: false,
+                        song: defaultSong,
+                      ),
+                      itemCount: 10,
+                    ),
+                  )
                 ],
               ),
-              Consumer(builder: (context, ref, _) {
-                final count = ref.watch(counterProvider2.state).state;
-                bool appBarVisible =
-                    count > MediaQuery.of(context).size.height * 0.45;
-                double percent = (_scrollController.position.pixels /
-                        MediaQuery.of(context).size.height) *
-                    100;
+              Consumer(
+                builder: (context, ref, _) {
+                  final count = ref.watch(counterProvider2.state).state;
+                  final bool appBarVisible =
+                      count > MediaQuery.of(context).size.height * 0.45;
+                  final double percent = (_scrollController.position.pixels /
+                          MediaQuery.of(context).size.height) *
+                      100;
 
-                return AppBars(
+                  return AppBars(
                     showAppBar: appBarVisible,
-                    titleOpacity: appBarVisible ? percent / 90 + 0.1 : 0);
-              }),
+                    titleOpacity: appBarVisible ? percent / 90 + 0.1 : 0,
+                  );
+                },
+              ),
             ],
           ),
         ),
@@ -384,7 +109,11 @@ class SearchBar extends StatelessWidget {
     return SliverToBoxAdapter(
       child: Padding(
         padding: const EdgeInsets.only(
-            left: 16.0, right: 16.0, bottom: 16.0, top: 56.0),
+          left: 16.0,
+          right: 16.0,
+          bottom: 16.0,
+          top: 56.0,
+        ),
         child: Row(
           children: [
             Expanded(
@@ -392,8 +121,9 @@ class SearchBar extends StatelessWidget {
                 height: 40,
                 width: double.infinity,
                 decoration: BoxDecoration(
-                    color: Colors.grey.shade200.withOpacity(0.2),
-                    borderRadius: const BorderRadius.all(Radius.circular(4.0))),
+                  color: Colors.grey.shade200.withOpacity(0.2),
+                  borderRadius: const BorderRadius.all(Radius.circular(4.0)),
+                ),
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
                   children: const [
@@ -402,9 +132,13 @@ class SearchBar extends StatelessWidget {
                       color: Colors.white,
                     ),
                     SizedBox(width: 8.0),
-                    Text("Zoeken in playlist",
-                        style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.w600)),
+                    Text(
+                      "Zoeken in playlist",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -416,12 +150,17 @@ class SearchBar extends StatelessWidget {
               height: 40,
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                  color: Colors.grey.shade200.withOpacity(0.2),
-                  borderRadius: const BorderRadius.all(Radius.circular(4))),
+                color: Colors.grey.shade200.withOpacity(0.2),
+                borderRadius: const BorderRadius.all(Radius.circular(4)),
+              ),
               padding: const EdgeInsets.all(8.0),
-              child: const Text("Sorteren",
-                  style: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.w600)),
+              child: const Text(
+                "Sorteren",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
             )
           ],
         ),
@@ -438,11 +177,13 @@ class AlbumSongsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverList(
-      delegate: SliverChildBuilderDelegate((context, index) => SongRow(
-            number: index,
-            numbered: false,
-            song: defaultSong,
-          )),
+      delegate: SliverChildBuilderDelegate(
+        (context, index) => SongRow(
+          number: index,
+          numbered: false,
+          song: defaultSong,
+        ),
+      ),
     );
   }
 }
@@ -461,16 +202,17 @@ class AlbumInfo extends StatelessWidget {
       child: DecoratedBox(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Colors.transparent,
-                Colors.black87,
-              ],
-              stops: [
-                0.00022,
-                1.0,
-              ]),
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Colors.transparent,
+              Colors.black87,
+            ],
+            stops: [
+              0.00022,
+              1.0,
+            ],
+          ),
         ),
         child: SizedBox(
           height: infoBoxHeight,
@@ -483,9 +225,10 @@ class AlbumInfo extends StatelessWidget {
                 const Text(
                   "=",
                   style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold),
+                    color: Colors.white,
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 const SizedBox(
                   height: 10,
@@ -496,7 +239,7 @@ class AlbumInfo extends StatelessWidget {
                       backgroundColor: Colors.red,
                       backgroundImage: NetworkImage(edImageUrl),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 8,
                     ),
                     const Text(
@@ -518,29 +261,37 @@ class AlbumInfo extends StatelessWidget {
                   ),
                 ),
                 Row(
-                  children: [
+                  children: const [
                     Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 8, horizontal: 4),
-                      child: const Icon(
+                      padding: EdgeInsets.symmetric(
+                        vertical: 8,
+                        horizontal: 4,
+                      ),
+                      child: Icon(
                         Icons.favorite_border,
                         color: Colors.white,
                       ),
                     ),
                     Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 8, horizontal: 4),
-                        child: Icon(
-                          Icons.download_outlined,
-                          color: Colors.white,
-                        )),
+                      padding: EdgeInsets.symmetric(
+                        vertical: 8,
+                        horizontal: 4,
+                      ),
+                      child: Icon(
+                        Icons.download_outlined,
+                        color: Colors.white,
+                      ),
+                    ),
                     Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 16, horizontal: 4),
-                        child: const Icon(
-                          Icons.more_vert_rounded,
-                          color: Colors.white,
-                        )),
+                      padding: EdgeInsets.symmetric(
+                        vertical: 16,
+                        horizontal: 4,
+                      ),
+                      child: Icon(
+                        Icons.more_vert_rounded,
+                        color: Colors.white,
+                      ),
+                    ),
                   ],
                 )
               ],
@@ -572,13 +323,11 @@ class AppBars extends StatelessWidget {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                    kAppBarPrimary,
-                    kAppBarSecondary,
-                  ],
-                stops: [
-                    0,
-                    0.5
-                  ])
+                  kAppBarPrimary,
+                  kAppBarSecondary,
+                ],
+                stops: [0, 0.5],
+              )
             : null,
       ),
       child: FixedAppBar(titleOpacity: titleOpacity),
@@ -613,11 +362,13 @@ class FixedAppBar extends StatelessWidget {
           AnimatedOpacity(
             opacity: titleOpacity.clamp(0, 1),
             duration: const Duration(milliseconds: 100),
-            child: const Text("Kevin",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 32,
-                )),
+            child: const Text(
+              "Kevin",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 32,
+              ),
+            ),
           ),
         ],
       ),
@@ -638,34 +389,36 @@ class SliverCustomeAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverPersistentHeader(
-        delegate: SliverAppBarDelegate(
-            maxHeight: maxAppBarHeight,
-            minHeight: minAppBarHeight,
-            builder: (context, shrinkOffset) {
-              final appBarVisible =
-                  shrinkOffset >= (maxAppBarHeight - minAppBarHeight);
-              print(appBarVisible);
-              final double shrinkToMaxAppBarHeightRatio =
-                  shrinkOffset / maxAppBarHeight - 0.3;
-              const double animatAlbumImageFromPoint = 0.3;
-              final animateAlbumImage =
-                  shrinkToMaxAppBarHeightRatio >= animatAlbumImageFromPoint;
-              final animateOpacityToZero = shrinkToMaxAppBarHeightRatio > 0.4;
-              final albumImageSize =
-                  MediaQuery.of(context).size.height * 0.35 - shrinkOffset / 2;
+      delegate: SliverAppBarDelegate(
+        maxHeight: maxAppBarHeight,
+        minHeight: minAppBarHeight,
+        builder: (context, shrinkOffset) {
+          final appBarVisible =
+              shrinkOffset >= (maxAppBarHeight - minAppBarHeight);
+          print(appBarVisible);
+          final double shrinkToMaxAppBarHeightRatio =
+              shrinkOffset / maxAppBarHeight - 0.3;
+          const double animatAlbumImageFromPoint = 0.3;
+          final animateAlbumImage =
+              shrinkToMaxAppBarHeightRatio >= animatAlbumImageFromPoint;
+          final animateOpacityToZero = shrinkToMaxAppBarHeightRatio > 0.4;
+          final albumImageSize =
+              MediaQuery.of(context).size.height * 0.35 - shrinkOffset / 2;
 
-              return Stack(
-                alignment: Alignment.topCenter,
-                children: [
-                  AlbumImage(
-                    animateOpacityToZero: animateOpacityToZero,
-                    animateAlbumImage: animateAlbumImage,
-                    shrinkToMaxAppBarHeightRatio: shrinkToMaxAppBarHeightRatio,
-                    albumImageSize: albumImageSize,
-                  ),
-                ],
-              );
-            }));
+          return Stack(
+            alignment: Alignment.topCenter,
+            children: [
+              AlbumImage(
+                animateOpacityToZero: animateOpacityToZero,
+                animateAlbumImage: animateAlbumImage,
+                shrinkToMaxAppBarHeightRatio: shrinkToMaxAppBarHeightRatio,
+                albumImageSize: albumImageSize,
+              ),
+            ],
+          );
+        },
+      ),
+    );
   }
 }
 
@@ -686,40 +439,36 @@ class AlbumImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: const EdgeInsets.only(top: 16.0),
-        child: AnimatedOpacity(
-          duration: const Duration(milliseconds: 100),
-          opacity: animateOpacityToZero
-              ? 0
-              : animateAlbumImage
-                  ? 1 - shrinkToMaxAppBarHeightRatio
-                  : 1,
-          child: Container(
-            height: albumImageSize > 0 ? albumImageSize : 0,
-            width: albumImageSize > 0 ? albumImageSize : 0,
-            decoration: const BoxDecoration(
-              color: Colors.deepPurpleAccent,
-              // image: DecorationImage(
-              //   image: NetworkImage(albumImageUrl),
-              //   fit: BoxFit.cover,
-              // ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black87,
-                  spreadRadius: 1,
-                  blurRadius: 50,
-                ),
-              ],
-            ),
+      padding: const EdgeInsets.only(top: 16.0),
+      child: AnimatedOpacity(
+        duration: const Duration(milliseconds: 100),
+        opacity: animateOpacityToZero
+            ? 0
+            : animateAlbumImage
+                ? 1 - shrinkToMaxAppBarHeightRatio
+                : 1,
+        child: Container(
+          height: albumImageSize > 0 ? albumImageSize : 0,
+          width: albumImageSize > 0 ? albumImageSize : 0,
+          decoration: const BoxDecoration(
+            color: Colors.deepPurpleAccent,
+            // image: DecorationImage(
+            //   image: NetworkImage(albumImageUrl),
+            //   fit: BoxFit.cover,
+            // ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black87,
+                spreadRadius: 1,
+                blurRadius: 50,
+              ),
+            ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
-
-typedef _SliverAppBarDelegateBuilder = Widget Function(
-  BuildContext context,
-  double shrinkOffset,
-);
 
 class SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   SliverAppBarDelegate({
@@ -730,7 +479,7 @@ class SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
 
   final double minHeight;
   final double maxHeight;
-  final _SliverAppBarDelegateBuilder builder;
+  final Widget Function(BuildContext, double) builder;
 
   @override
   double get minExtent => minHeight;
@@ -740,7 +489,10 @@ class SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
 
   @override
   Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
     return SizedBox.expand(
       child: builder(context, shrinkOffset),
     );
@@ -754,7 +506,7 @@ class SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   }
 }
 
-extension colors on Color {
+extension ColorsExtension on Color {
   Color darken([double amount = .1]) {
     assert(amount >= 0 && amount <= 1);
 

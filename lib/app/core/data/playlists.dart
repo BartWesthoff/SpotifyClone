@@ -3,15 +3,16 @@ import 'package:spotifyclone/app/core/data/models/playlist_model.dart';
 import 'package:spotifyclone/app/core/data/models/song_model.dart';
 
 final defaultSong = Song(
-    title: 'Samen',
-    image: 'assets/images/4.jpg',
-    artists: [
-      Artist(name: 'Kevin'),
-      Artist(name: 'Yade lauren'),
-    ],
-    active: false,
-    explicit: true,
-    lyrics: false);
+  title: 'Samen',
+  image: 'assets/images/4.jpg',
+  artists: [
+    Artist(name: 'Kevin'),
+    Artist(name: 'Yade lauren'),
+  ],
+  active: false,
+  explicit: true,
+  lyrics: false,
+);
 
 final userLeftPlaylistData = [
   Playlist(

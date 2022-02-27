@@ -29,7 +29,7 @@ class _RootScreenState extends State<RootScreen> {
             ),
             child: BottomNavigationBar(
               unselectedItemColor: Colors.grey,
-              unselectedIconTheme: IconThemeData(color: Colors.grey),
+              unselectedIconTheme: const IconThemeData(color: Colors.grey),
               backgroundColor: Colors.transparent,
               fixedColor: Colors.white,
               currentIndex: state.index,
@@ -74,9 +74,9 @@ class _RootScreenState extends State<RootScreen> {
           if (state.navbarItem == NavbarItem.home) {
             return const HomeScreen();
           } else if (state.navbarItem == NavbarItem.search) {
-            return SearchScreen();
+            return const SearchScreen();
           } else if (state.navbarItem == NavbarItem.library) {
-            return ArtistPlaylistScreen();
+            return const ArtistPlaylistScreen();
           }
           return Container();
         },

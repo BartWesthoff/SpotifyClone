@@ -11,44 +11,45 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     // final user = context.select((AuthenticationBloc bloc) => bloc.state.user);
     return Scaffold(
-        extendBody: true,
-        backgroundColor: const Color(0xFF121212),
-        body: Container(
-          padding: EdgeInsets.only(top: MediaQuery.of(context).viewPadding.top),
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: const Alignment(-0.7, -0.7),
-              colors: [
-                const Color(0xffEBEEE3).withOpacity(0.3),
-                Colors.black,
-              ],
-            ),
-          ),
-          child: Stack(
-            children: [
-              SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const HomePreferredPlayListSection(),
-                    PlaylistSection(
-                      title: 'Recenty Played',
-                      playlists: recentlyPlayed,
-                    ),
-                    const SizedBox(height: 10 * 5),
-                    PlaylistSection(
-                      title: 'Jump back in',
-                      playlists: jumpBackIn,
-                    ),
-                    const SizedBox(height: 10 * 17),
-                  ],
-                ),
-              ),
-              //   SpBottomNavigation(songIsPlaying: true),
+      extendBody: true,
+      backgroundColor: const Color(0xFF121212),
+      body: Container(
+        padding: EdgeInsets.only(top: MediaQuery.of(context).viewPadding.top),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: const Alignment(-0.7, -0.7),
+            colors: [
+              const Color(0xffEBEEE3).withOpacity(0.3),
+              Colors.black,
             ],
           ),
-        ));
+        ),
+        child: Stack(
+          children: [
+            SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const HomePreferredPlayListSection(),
+                  PlaylistSection(
+                    title: 'Recenty Played',
+                    playlists: recentlyPlayed,
+                  ),
+                  const SizedBox(height: 10 * 5),
+                  PlaylistSection(
+                    title: 'Jump back in',
+                    playlists: jumpBackIn,
+                  ),
+                  const SizedBox(height: 10 * 17),
+                ],
+              ),
+            ),
+            //   SpBottomNavigation(songIsPlaying: true),
+          ],
+        ),
+      ),
+    );
   }
 }
 

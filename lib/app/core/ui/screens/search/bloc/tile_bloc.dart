@@ -1,8 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'tile_state.dart';
-
-import 'tile_event.dart';
+import 'package:spotifyclone/app/core/ui/screens/search/bloc/tile_event.dart';
+import 'package:spotifyclone/app/core/ui/screens/search/bloc/tile_state.dart';
 
 class TileBloc extends Bloc<TileEvent, TileState> {
   /// {@macro counter_bloc}

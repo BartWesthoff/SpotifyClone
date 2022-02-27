@@ -12,9 +12,10 @@ class TileTitle extends StatelessWidget {
       child: Text(
         title,
         style: TextStyle(
-            color: Theme.of(context).colorScheme.onPrimary,
-            fontWeight: FontWeight.w800,
-            fontSize: 18),
+          color: Theme.of(context).colorScheme.onPrimary,
+          fontWeight: FontWeight.w800,
+          fontSize: 18,
+        ),
       ),
     );
   }
