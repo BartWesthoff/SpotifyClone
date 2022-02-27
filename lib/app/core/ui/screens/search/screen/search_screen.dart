@@ -1,143 +1,123 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:spotifyclone/app/core/data/playlists.dart';
-import 'package:spotifyclone/app/core/ui/screens/artist/screen/artist_screen.dart';
-import 'package:spotifyclone/app/core/ui/screens/playlist/screen/playlist_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:spotifyclone/app/core/ui/screens/search/screen/search_view.dart';
 
 class SearchScreen extends StatelessWidget {
   const SearchScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            pinned: true,
-            backgroundColor: Colors.black,
-            expandedHeight: MediaQuery.of(context).size.height * 0.25,
-            bottom: PreferredSize(
-              preferredSize: const Size(0.0, 16.0),
-              child: Column(
-                children: [
-                  Container(
-                    height: 56,
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.search,
-                          size: 40,
-                        ),
-                        Text(
-                          "Artiesten, nummers of podcasts",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600),
-                        ),
-                      ],
-                    ),
-                    decoration: const BoxDecoration(
-                      // border: Border(
-                      //   bottom: BorderSide(
-                      //       color: Colors.black,
-                      //       width: 4,
-                      //       style: BorderStyle.solid),
-                      // ),
-                      borderRadius: BorderRadius.all(Radius.circular(4.0)),
-                      color: Colors.white,
-                    ),
-                  ),
-                  Container(
-                    height: 5,
-                    color: Colors.black,
-                  ),
-                ],
-              ),
-            ),
-            flexibleSpace: Padding(
-              padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-              child: Container(
-                alignment: Alignment(-1.0, -0.4),
-                child: Text(
-                  "Zoeken",
-                  style: TextStyle(
-                      fontSize: 26,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold),
-                ),
-              ),
-            ),
-          ),
-          SliverToBoxAdapter(
-            child: ColumnBuilder(
-                itemBuilder: (context, index) => ExploreAlbumRow(),
-                itemCount: 50),
-          )
-        ],
-      ),
-    );
+    return BlocProvider(
+        create: (_) => ScrollBloc(),
+        child: BlocBuilder<ScrollBloc, bool>(builder: (context, scroll) {
+          return SearchView(scrollState: scroll);
+        }));
   }
 }
 
-class ExploreAlbumRow extends StatelessWidget {
-  const ExploreAlbumRow({Key? key}) : super(key: key);
+abstract class ScrollEvent extends Equatable {
+  const ScrollEvent();
 
   @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        ExploreAlbumTile(color: Colors.red, genre: "NL"),
-        ExploreAlbumTile(color: Colors.purple, genre: "Pop"),
-      ],
-    );
+  List<Object> get props => [];
+}
+
+class ScrollStarted extends ScrollEvent {
+  const ScrollStarted();
+
+  @override
+  List<Object> get props => [];
+}
+
+class ScrollEnded extends ScrollEvent {
+  const ScrollEnded();
+
+  @override
+  List<Object> get props => [];
+}
+
+class ScrollBloc extends Bloc<ScrollEvent, bool> {
+  /// {@macro counter_bloc}
+  ScrollBloc() : super(false) {
+    on<ScrollStarted>(_onScrollStart);
+    on<ScrollEnded>(_onScrollEnd);
+  }
+
+  void _onScrollStart(
+    ScrollStarted event,
+    Emitter<bool> emit,
+  ) {
+    emit(true);
+  }
+
+  void _onScrollEnd(
+    ScrollEnded event,
+    Emitter<bool> emit,
+  ) {
+    emit(false);
   }
 }
 
-class ExploreAlbumTile extends StatelessWidget {
-  final Color color;
-  final String genre;
-  const ExploreAlbumTile({Key? key, required this.color, required this.genre})
+// enum ScrollStatus { ScrollStarted, ScrollStopped, undifined }
+//
+// class ScrollState extends Equatable {
+//   const ScrollState({
+//     this.status = ScrollStatus.undifined,
+//   });
+//
+//   final ScrollStatus status;
+//
+//   ScrollState copyWith({
+//     ScrollStatus? status,
+//   }) {
+//     return ScrollState(
+//       status: status ?? this.status,
+//     );
+//   }
+//
+//   @override
+//   List<Object?> get props => [];
+// }
+
+class SwipeDetector extends StatelessWidget {
+  final Widget child;
+  final Function? onSwipeLeft;
+  final Function? onSwipeRight;
+  final Function? onSwipeUp;
+  final Function? onSwipeDown;
+
+  const SwipeDetector(
+      {Key? key,
+      required this.child,
+      this.onSwipeLeft,
+      this.onSwipeRight,
+      this.onSwipeUp,
+      this.onSwipeDown})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Container(
-          height: 100,
-          decoration: BoxDecoration(
-            color: color,
-            borderRadius: BorderRadius.all(Radius.circular(4.0)),
-          ),
-          child: Stack(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  genre,
-                  style: TextStyle(
-                      color: Theme.of(context).colorScheme.onPrimary,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20),
-                ),
-              ),
-              Positioned(
-                right: -20,
-                bottom: -10,
-                child: RotationTransition(
-                  turns: new AlwaysStoppedAnimation(30 / 360),
-                  child: Image.asset(
-                    'assets/images/1.jpg',
-                    height: 80,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+    return GestureDetector(
+      onHorizontalDragUpdate: (details) {
+        // Note: Sensitivity is integer used when you don't want to mess up vertical drag
+        int sensitivity = 0;
+        if (details.delta.dx > sensitivity) {
+          if (onSwipeLeft != null) onSwipeLeft!();
+        } else if (details.delta.dx < -sensitivity) {
+          if (onSwipeRight != null) onSwipeRight!();
+        }
+      },
+      onVerticalDragUpdate: (details) {
+        int sensitivity = 0;
+
+        if (details.delta.dy > sensitivity) {
+          if (onSwipeDown != null) onSwipeDown!();
+        } else if (details.delta.dy < -sensitivity) {
+          if (onSwipeUp != null) onSwipeUp!();
+        }
+      },
+      child: child,
     );
   }
 }
