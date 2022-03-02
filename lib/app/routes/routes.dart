@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spotifyclone/app/core/authentication/bloc/authentication_bloc.dart';
+import 'package:spotifyclone/app/core/ui/screens/genre/screen/genre_screen.dart';
 import 'package:spotifyclone/app/core/ui/screens/home/screen/home_screen.dart';
 import 'package:spotifyclone/app/core/ui/screens/intro/screen/intro_screen.dart';
 import 'package:spotifyclone/app/core/ui/screens/login/screen/login_page.dart';
 import 'package:spotifyclone/app/core/ui/screens/root/screen/root_screen.dart';
 import 'package:spotifyclone/app/core/ui/screens/search/screen/search_screen.dart';
+import 'package:spotifyclone/app/core/ui/screens/seemoregenre/screen/seemoregenre_screen.dart';
 import 'package:spotifyclone/app/core/ui/screens/sign_up/screen/sign_up_page.dart';
 
 class Routes {
@@ -19,6 +21,8 @@ class Routes {
   static const String library = '/library';
   static const String search = '/search';
   static const String root = '/root';
+  static const String genre = '/genre';
+  static const String seemore = '/seemore';
 }
 
 class Navigation {
@@ -71,6 +75,18 @@ Route<dynamic>? onGenerateRoute(
       case Routes.search:
         return MaterialPageRoute<dynamic>(
           builder: (context) => const SearchScreen(),
+          settings: settings,
+          fullscreenDialog: true,
+        );
+      case Routes.genre:
+        return MaterialPageRoute<dynamic>(
+          builder: (context) => const GenreScreen(),
+          settings: settings,
+          fullscreenDialog: true,
+        );
+      case Routes.seemore:
+        return MaterialPageRoute<dynamic>(
+          builder: (context) => const SeeMoreScreen(),
           settings: settings,
           fullscreenDialog: true,
         );

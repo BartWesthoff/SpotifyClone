@@ -84,7 +84,7 @@ class SearchScreen extends StatelessWidget {
           SliverToBoxAdapter(
             child: ColumnBuilder(
               itemBuilder: (context, index) => const ExploreAlbumRow(),
-              itemCount: 50,
+              itemCount: 5,
             ),
           ),
         ],

@@ -16,6 +16,7 @@ final defaultSong = Song(
 
 final userLeftPlaylistData = [
   Playlist(
+    followers: 20000,
     title: 'Place in the sun',
     image: 'assets/images/1.jpg',
     shuffle: true,
@@ -33,6 +34,7 @@ final userLeftPlaylistData = [
     ],
   ),
   Playlist(
+    followers: 20000,
     title: 'Causeway Trends',
     image: 'assets/images/2.jpg',
     shuffle: true,
@@ -40,6 +42,7 @@ final userLeftPlaylistData = [
     songs: [defaultSong],
   ),
   Playlist(
+    followers: 20000,
     title: 'Light & Easy',
     image: 'assets/images/4.jpg',
     shuffle: true,
@@ -50,6 +53,7 @@ final userLeftPlaylistData = [
 
 final userRightPlaylistData = [
   Playlist(
+    followers: 20000,
     title: 'Lo-Fi Beats',
     image: 'assets/images/8.jpg',
     shuffle: false,
@@ -57,6 +61,7 @@ final userRightPlaylistData = [
     songs: [defaultSong],
   ),
   Playlist(
+    followers: 20000,
     title: 'Alone Again',
     image: 'assets/images/3.jpg',
     shuffle: true,
@@ -64,6 +69,7 @@ final userRightPlaylistData = [
     songs: [defaultSong],
   ),
   Playlist(
+    followers: 20000,
     title: 'LUSH LOFI',
     image: 'assets/images/6.jpg',
     shuffle: false,
@@ -74,6 +80,7 @@ final userRightPlaylistData = [
 
 final recentlyPlayed = [
   Playlist(
+    followers: 20000,
     title: 'Lo-Fi Beats',
     image: 'assets/images/8.jpg',
     shuffle: false,
@@ -121,6 +128,7 @@ final recentlyPlayed = [
     ],
   ),
   Playlist(
+    followers: 20000,
     title: 'Beast Mode',
     image: 'assets/images/14.jpg',
     shuffle: true,
@@ -128,6 +136,7 @@ final recentlyPlayed = [
     songs: [defaultSong],
   ),
   Playlist(
+    followers: 20000,
     title: 'Work From Home',
     image: 'assets/images/13.jpg',
     shuffle: false,
@@ -138,6 +147,7 @@ final recentlyPlayed = [
 
 final jumpBackIn = [
   Playlist(
+    followers: 20000,
     title: 'Happy Hits',
     image: 'assets/images/11.jpg',
     shuffle: false,
@@ -145,6 +155,7 @@ final jumpBackIn = [
     songs: [defaultSong],
   ),
   Playlist(
+    followers: 20000,
     title: 'Confidence Boost',
     image: 'assets/images/12.jpg',
     shuffle: false,
@@ -152,6 +163,7 @@ final jumpBackIn = [
     songs: [defaultSong],
   ),
   Playlist(
+    followers: 20000,
     title: 'Jazz Hits',
     image: 'assets/images/9.jpg',
     shuffle: false,

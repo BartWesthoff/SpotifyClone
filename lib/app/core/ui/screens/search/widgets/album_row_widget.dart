@@ -12,19 +12,25 @@ class ExploreAlbumRow extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
       child: Row(
         children: const [
-          ExploreAlbumTile(
+          Tile(
             color: Colors.red,
             genre: "NL",
           ),
           SizedBox(
             width: 16.0,
           ),
-          ExploreAlbumTile(
-            color: Colors.purple,
-            genre: "Pop",
+          Tile(
+            color: Colors.red,
+            genre: "NL",
           ),
         ],
       ),
     );
   }
 }
+
+// Tile(
+// widget: widget,
+// opacityAnimation: _opacityAnimation,
+// color: widget.color,
+// genre: widget.genre)

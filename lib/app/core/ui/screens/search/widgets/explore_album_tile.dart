@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:spotifyclone/app/routes/routes.dart';
 
-class ExploreAlbumTile extends StatefulWidget {
+class Tile extends StatefulWidget {
   final Color color;
   final String genre;
-
-  const ExploreAlbumTile({Key? key, required this.color, required this.genre})
+  const Tile({Key? key, required this.color, required this.genre})
       : super(key: key);
 
   @override
-  _ExploreAlbumTileState createState() => _ExploreAlbumTileState();
+  _TileState createState() => _TileState();
 }
 
-class _ExploreAlbumTileState extends State<ExploreAlbumTile>
-    with SingleTickerProviderStateMixin {
+class _TileState extends State<Tile> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _scaleAnimation;
   late Animation<double> _opacityAnimation;
@@ -22,7 +21,7 @@ class _ExploreAlbumTileState extends State<ExploreAlbumTile>
     super.initState();
 
     _controller = AnimationController(
-      duration: const Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 200),
       vsync: this,
     );
 
@@ -30,16 +29,9 @@ class _ExploreAlbumTileState extends State<ExploreAlbumTile>
     _opacityAnimation =
         Tween<double>(begin: 1.0, end: 0.5).animate(_controller);
 
-    _scaleAnimation.addStatusListener((status) {
-      // if (_controller.isCompleted)
-      //   Future.delayed(
-      //     const Duration(milliseconds: 500),
-      //     () => _controller.reverse(),
-      //   );
-    });
     _controller.drive(
       CurveTween(
-        curve: Curves.easeOutExpo,
+        curve: Curves.easeOutCirc,
       ),
     );
   }
@@ -59,7 +51,11 @@ class _ExploreAlbumTileState extends State<ExploreAlbumTile>
           scale: _scaleAnimation.value,
           child: GestureDetector(
             onLongPress: () => _controller.forward(),
-            onTap: () => print("on tap"),
+            onTapDown: (_) => _controller.forward(),
+            onTap: () {
+              Navigation.instance.pushNamed(route: Routes.genre);
+              _controller.reverse();
+            },
             onLongPressUp: () => _controller.reverse(),
             child: Container(
               height: 100,
@@ -69,7 +65,8 @@ class _ExploreAlbumTileState extends State<ExploreAlbumTile>
                 borderRadius: const BorderRadius.all(Radius.circular(4.0)),
               ),
               child: ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(4.0)),
+                borderRadius:
+                    const BorderRadius.only(bottomRight: Radius.circular(4.0)),
                 child: Stack(
                   children: [
                     Positioned(
@@ -77,18 +74,23 @@ class _ExploreAlbumTileState extends State<ExploreAlbumTile>
                       bottom: -10,
                       child: RotationTransition(
                         turns: const AlwaysStoppedAnimation(30 / 360),
-                        child: Image.asset(
-                          'assets/images/1.jpg',
-                          height: 80,
+                        child: ClipRRect(
+                          borderRadius: const BorderRadius.only(
+                            bottomRight: Radius.circular(4.0),
+                          ),
+                          child: Image.asset(
+                            'assets/images/1.jpg',
+                            height: 80,
+                          ),
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: AnimatedOpacity(
-                        curve: Curves.easeOutExpo,
-                        opacity: _opacityAnimation.value,
-                        duration: const Duration(milliseconds: 500),
+                    AnimatedOpacity(
+                      curve: Curves.easeOutCirc,
+                      opacity: _opacityAnimation.value,
+                      duration: const Duration(milliseconds: 500),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
                         child: Text(
                           widget.genre,
                           style: TextStyle(
