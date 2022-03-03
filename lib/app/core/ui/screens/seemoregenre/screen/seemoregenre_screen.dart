@@ -3,6 +3,7 @@ import 'package:spotifyclone/app/core/data/playlists.dart';
 import 'package:spotifyclone/app/core/ui/screens/genre/screen/genre_screen.dart';
 import 'package:spotifyclone/app/core/ui/screens/playlist/screen/playlist_screen.dart';
 import 'package:spotifyclone/app/routes/routes.dart';
+import 'package:spotifyclone/app/widgets/bottom_nav_bar_widget.dart';
 import 'package:spotifyclone/app/widgets/column_builder.dart';
 
 class SeeMoreScreen extends StatelessWidget {
@@ -11,6 +12,7 @@ class SeeMoreScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: const BottomNavBar(),
       backgroundColor: Colors.black,
       appBar: AppBar(
         title: const Text(

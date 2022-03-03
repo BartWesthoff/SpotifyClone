@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:spotifyclone/app/routes/routes.dart';
 
 part 'nav_bar_state.dart';
 
@@ -12,6 +13,7 @@ class NavBarCubit extends Cubit<NavBarState> {
     switch (navbarItem) {
       case NavbarItem.home:
         emit(const NavBarState(NavbarItem.home, 0));
+        Navigation.instance.reset(route: Routes.intial);
         break;
       case NavbarItem.search:
         emit(const NavBarState(NavbarItem.search, 1));

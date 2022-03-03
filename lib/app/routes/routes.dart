@@ -37,6 +37,9 @@ class Navigation {
         arguments: arguments,
       );
 
+  void reset({required String route, Object? arguments}) =>
+      navigationKey.currentState!.popUntil(ModalRoute.withName(route));
+
   Future<dynamic> pushReplace({required String route, Object? arguments}) =>
       navigationKey.currentState!.pushReplacementNamed(route);
 
@@ -120,4 +123,47 @@ Route<dynamic>? onGenerateRoute(
     settings: settings,
     fullscreenDialog: true,
   );
+}
+
+class ScaleRotateRoute extends PageRouteBuilder {
+  final Widget page;
+  ScaleRotateRoute({required this.page})
+      : super(
+          pageBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+          ) =>
+              page,
+          transitionDuration: Duration(seconds: 0),
+          transitionsBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+            Widget child,
+          ) =>
+              ScaleTransition(
+            scale: Tween<double>(
+              begin: 0.0,
+              end: 1.0,
+            ).animate(
+              CurvedAnimation(
+                parent: animation,
+                curve: Curves.fastOutSlowIn,
+              ),
+            ),
+            child: RotationTransition(
+              turns: Tween<double>(
+                begin: 0.0,
+                end: 1.0,
+              ).animate(
+                CurvedAnimation(
+                  parent: animation,
+                  curve: Curves.linear,
+                ),
+              ),
+              child: child,
+            ),
+          ),
+        );
 }
